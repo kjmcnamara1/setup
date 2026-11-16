@@ -54,6 +54,8 @@
   zsh  = true
   fish = "auto"
 
+  # 12. macos-defaults
+
 [bootstrap.services.mise-history]
   builtin = "history-watch"
 
