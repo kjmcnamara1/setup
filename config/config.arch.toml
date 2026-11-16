@@ -3,8 +3,6 @@
   pacman-contrib = "latest"
   btrfs-progs    = "latest"
   plymouth       = "latest"
-  networkmanager = "latest"
-  iwd            = "latest"
   avahi          = "latest"
   nss-mdns       = "latest"
   cups           = "latest"
