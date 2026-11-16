@@ -13,6 +13,7 @@
   dosfstools     = "latest"
   mtools         = "latest"
   udiskie        = "latest"
+  wl-clipboard   = "latest"
 
   # chaotic AUR?
 
