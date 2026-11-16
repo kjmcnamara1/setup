@@ -15,3 +15,6 @@
   udiskie        = "latest"
 
   # chaotic AUR?
+
+[bootstrap.services.udiskie]
+  scope = "user"
