@@ -8,3 +8,4 @@
 [tools]
   tree-sitter = "latest"
   node        = "latest"
+  shellcheck  = "latest"
