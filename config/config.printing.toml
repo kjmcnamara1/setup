@@ -1,4 +1,11 @@
 [bootstrap.packages]
-  cups = "latest"
+  cups                  = "latest"
+  cups-filters          = "latest"
+  cups-pdf              = "latest"
+  cups-pk-helper        = "latest"
+  libcups               = "latest"
+  avahi                 = "latest"
+  nss-mdns              = "latest"
+  system-config-printer = "latest"
 
 [bootstrap.services."cups.socket"]
