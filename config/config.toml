@@ -3,6 +3,9 @@
   sync_interval    = "30s"
   describe_command = "claude -p --output-format text --no-session-persistence 'Describe this change to my configuration files in one line of at most 120 characters, plain text, no quotes.'"
 
+[history]
+  git_email = "mise@{hostname}"
+
   # https://mise.jdx.dev/bootstrap.html#how-it-runs
 
 # 1. accounts
@@ -34,9 +37,6 @@
 # 10. dotfiles
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
-
-[history]
-  git_email = "mise@{hostname}"
 
 [bootstrap.mise_shell_activate]
   bash = true
