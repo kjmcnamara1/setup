@@ -2,6 +2,7 @@
   base-devel     = "latest"
   pacman-contrib = "latest"
   btrfs-progs    = "latest"
+  plymouth       = "latest" # boot module?
   ntfs-3g        = "latest"
   reflector      = "latest"
   zram-generator = "latest"
