@@ -53,6 +53,7 @@
 [bootstrap.user]
   login_shell = "fish"
 
+# 4. packages
 [bootstrap.packages]
   man-db    = "latest"
   man-pages = "latest"
