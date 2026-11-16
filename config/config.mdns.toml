@@ -3,6 +3,7 @@
   nss-mdns = "latest"
 
 [bootstrap.files."/etc/nsswitch.conf"]
+  notify = ["avahi-daemon"]
   content = """
 # Name Service Switch configuration file.
 # See nsswitch.conf(5) for details.
@@ -24,3 +25,5 @@ rpc: files
 
 netgroup: files
 """
+
+[bootstrap.services.avahi-daemon]
