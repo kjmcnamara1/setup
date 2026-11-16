@@ -16,6 +16,8 @@
     # "i2c"
   ]
 
+  # 2. plugins
+
 [settings.history]
   fetch_interval   = "30s"
   sync_interval    = "30s"
