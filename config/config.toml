@@ -43,3 +43,4 @@
   pacman-contrib = "latest"
   git            = "latest"
   openssh        = "latest"
+  fish           = "latest"
