@@ -77,6 +77,7 @@
 [bootstrap.user]
   login_shell = "fish"
 
+# 16. tools
 [tools]
   claude   = "latest"
   opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
