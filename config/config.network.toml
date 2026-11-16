@@ -7,3 +7,11 @@
 [device]
 wifi.backend=iwd
 """
+
+[bootstrap.files."/etc/iwd/main.conf"]
+  content = """
+[Rank]
+BandModifier6GHz=2.0
+BandModifier5GHz=1.5
+BandModifier2_4GHz=0.5
+"""
