@@ -1,3 +1,9 @@
 
 [bootstrap.packages]
-  git = "latest"
+  git        = "latest"
+  github-cli = "latest"
+  lazygit    = "latest"
+  git-delta  = "latest"
+  difftastic = "latest"
+  jujutsu    = "latest"
+  jjui-bin   = "latest"
