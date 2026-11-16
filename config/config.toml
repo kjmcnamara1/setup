@@ -12,6 +12,11 @@
 [history]
   git_email = "mise@{hostname}"
 
+[bootstrap.mise_shell_activate]
+  bash = true
+  zsh  = true
+  fish = "auto"
+
 [bootstrap.services.mise-history]
   builtin = "history-watch"
 
