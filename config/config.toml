@@ -51,6 +51,5 @@
   git       = "latest"
   wget      = "latest"
   curl      = "latest"
-  snapper   = "latest"
   openssh   = "latest"
   fish      = "latest"
