@@ -4,7 +4,7 @@
   btrfs-progs    = "latest"
   plymouth       = "latest" # boot module?
   ntfs-3g        = "latest"
-  reflector      = "latest"
+  reflector      = "latest" # reflector module? with /etc/xdg/reflector/reflector.conf
   zram-generator = "latest"
   efibootmgr     = "latest"
   sudo           = "latest"
