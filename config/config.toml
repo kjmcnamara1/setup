@@ -28,6 +28,16 @@
 
   # 3. files phase = "pre-packages"
 
+# 4. packages
+[bootstrap.packages]
+  man-db    = "latest"
+  man-pages = "latest"
+  git       = "latest"
+  wget      = "latest"
+  curl      = "latest"
+  openssh   = "latest"
+  fish      = "latest"
+
 # 5. files phase = "post-packages"
 [bootstrap.files."/etc/sudoers.d/wheel"]
   content = "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
@@ -52,16 +62,6 @@
 # 15. user
 [bootstrap.user]
   login_shell = "fish"
-
-# 4. packages
-[bootstrap.packages]
-  man-db    = "latest"
-  man-pages = "latest"
-  git       = "latest"
-  wget      = "latest"
-  curl      = "latest"
-  openssh   = "latest"
-  fish      = "latest"
 
 [tools]
   claude   = "latest"
