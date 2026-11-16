@@ -1,3 +1,5 @@
+# https://mise.jdx.dev/bootstrap.html#how-it-runs
+
 # 1. accounts
 [bootstrap.groups.kjm]
 
@@ -18,10 +20,6 @@
   fetch_interval   = "30s"
   sync_interval    = "30s"
   describe_command = "claude -p --output-format text --no-session-persistence 'Describe this change to my configuration files in one line of at most 120 characters, plain text, no quotes.'"
-
-[tools]
-  claude   = "latest"
-  opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
 
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
@@ -56,3 +54,7 @@
   curl      = "latest"
   openssh   = "latest"
   fish      = "latest"
+
+[tools]
+  claude   = "latest"
+  opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
