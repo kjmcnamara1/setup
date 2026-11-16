@@ -53,6 +53,11 @@
   gum          = "latest"
   bottom       = "latest"
   rocm-smi-lib = "latest"
+  # silicon  = "latest"
+  # vhs      = "latest"
+  # asciinema      = "latest"
+  # asciinema-edit = "latest"
+  # asciinema-agg  = "latest"
 
 # 5. files phase = "post-packages"
 [bootstrap.files."/etc/sudoers.d/wheel"]
@@ -99,11 +104,6 @@
   opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
   herdr    = "latest"
   cliamp   = "latest"
-  silicon  = "latest"
-  vhs      = "latest"
-  # asciinema      = "latest"
-  # asciinema-edit = "latest"
-  # asciinema-agg  = "latest"
 
   # 17. packages from package manager plugins
 
