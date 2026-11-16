@@ -1,11 +1,13 @@
 [bootstrap.packages]
-  yazi         = "latest"
-  ffmpeg       = "latest"
   mediainfo    = "latest"
-  poppler      = "latest"
-  resvg        = "latest"
-  imagemagick  = "latest"
   rich-cli     = "latest"
   ouch         = "latest"
-  7zip         = "latest"
   wl-clipboard = "latest"
+
+[tools]
+  yazi        = "latest"
+  ffmpeg      = "latest"
+  poppler     = "latest"
+  resvg       = "latest"
+  imagemagick = "latest"
+  7zip        = "latest"
