@@ -5,6 +5,9 @@
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
 
+[history]
+  git_email = "mise@{hostname}"
+
 [bootstrap.services.mise-history]
   builtin = "history-watch"
 
