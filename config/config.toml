@@ -29,13 +29,26 @@
 
 # 4. packages
 [bootstrap.packages]
-  man-db    = "latest"
-  man-pages = "latest"
-  git       = "latest"
-  wget      = "latest"
-  curl      = "latest"
-  openssh   = "latest"
-  fish      = "latest"
+  man-db     = "latest"
+  man-pages  = "latest"
+  git        = "latest"
+  wget       = "latest"
+  curl       = "latest"
+  openssh    = "latest"
+  fish       = "latest"
+  bat        = "latest"
+  eza        = "latest"
+  jq         = "latest"
+  starship   = "latest"
+  fd         = "latest"
+  ripgrep    = "latest"
+  fzf        = "latest"
+  television = "latest"
+  zoxide     = "latest"
+  pv         = "latest"
+  tldr       = "latest"
+  fastfetch  = "latest"
+  udiskie    = "latest"
 
 # 5. files phase = "post-packages"
 [bootstrap.files."/etc/sudoers.d/wheel"]
@@ -78,21 +91,8 @@
 
 # 16. tools
 [tools]
-  bat        = "latest"
-  eza        = "latest"
-  jq         = "latest"
-  starship   = "latest"
-  fd         = "latest"
-  ripgrep    = "latest"
-  fzf        = "latest"
-  television = "latest"
-  zoxide     = "latest"
-  pv         = "latest"
-  tldr       = "latest"
-  fastfetch  = "latest"
-  udiskie    = "latest"
-  claude     = "latest"
-  opencode   = { version = "latest", allow_builds = ["@opencode/cli"] }
+  claude   = "latest"
+  opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
 
   # 17. packages from package manager plugins
 
