@@ -12,5 +12,6 @@
   sudo           = "latest"
   dosfstools     = "latest"
   mtools         = "latest"
+  udiskie        = "latest"
 
   # chaotic AUR?
