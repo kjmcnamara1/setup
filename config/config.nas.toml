@@ -1,3 +1,6 @@
+[bootstrap.packages]
+  nfs-utils = "latest"
+
 [bootstrap.files."/etc/fstab"]
   os = "linux"
   id = "nas"
