@@ -18,7 +18,8 @@
 
   # 2. plugins
 
-# 3. files phase = "pre-packages"
+  # 3. files phase = "pre-packages"
+
 # 5. files phase = "post-packages"
 [bootstrap.files."/etc/sudoers.d/wheel"]
   content = "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
