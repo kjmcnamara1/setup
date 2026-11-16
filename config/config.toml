@@ -78,8 +78,21 @@
 
 # 16. tools
 [tools]
-  claude   = "latest"
-  opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
+  bat        = "latest"
+  eza        = "latest"
+  jq         = "latest"
+  starship   = "latest"
+  fd         = "latest"
+  ripgrep    = "latest"
+  fzf        = "latest"
+  television = "latest"
+  zoxide     = "latest"
+  pv         = "latest"
+  tldr       = "latest"
+  fastfetch  = "latest"
+  udiskie    = "latest"
+  claude     = "latest"
+  opencode   = { version = "latest", allow_builds = ["@opencode/cli"] }
 
   # 17. packages from package manager plugins
 
