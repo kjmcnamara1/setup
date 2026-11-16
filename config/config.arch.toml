@@ -3,7 +3,6 @@
   pacman-contrib = "latest"
   btrfs-progs    = "latest"
   plymouth       = "latest"
-  cups           = "latest"
   ntfs-3g        = "latest"
   reflector      = "latest"
   zram-generator = "latest"
