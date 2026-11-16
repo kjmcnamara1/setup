@@ -6,8 +6,7 @@
 [history]
   git_email = "mise@{hostname}"
 
-  # https://mise.jdx.dev/bootstrap.html#how-it-runs
-
+# https://mise.jdx.dev/bootstrap.html#how-it-runs
 # 1. accounts
 [bootstrap.groups.kjm]
 
