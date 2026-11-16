@@ -56,6 +56,8 @@
 
   # 12. macos-defaults
 
+  # 13. macos-launchd-agents
+
 [bootstrap.services.mise-history]
   builtin = "history-watch"
 
