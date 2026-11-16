@@ -34,7 +34,6 @@
   git          = "latest"
   wget         = "latest"
   curl         = "latest"
-  openssh      = "latest"
   fish         = "latest"
   bat          = "latest"
   eza          = "latest"
