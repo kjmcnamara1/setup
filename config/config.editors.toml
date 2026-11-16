@@ -1,7 +1,7 @@
 [bootstrap.packages]
-  neovim          = "latest"
-  helix           = "latest"
-  tree-sitter-cli = "latest"
+  neovim = "latest"
+  helix  = "latest"
+  # tree-sitter-cli = "latest"
 
 [tools]
   tree-sitter = "latest"
