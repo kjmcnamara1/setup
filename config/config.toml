@@ -4,6 +4,7 @@
 
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
+"~/.config/mise/config.toml" = {}
 
 [history]
   git_email = "mise@{hostname}"
