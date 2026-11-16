@@ -24,6 +24,7 @@
 [bootstrap.services.mise-tool-update]
   builtin = "tool-update"
 
+# 1. accounts
 [bootstrap.users.kjm]
   create_home = true
   group = "kjm"
