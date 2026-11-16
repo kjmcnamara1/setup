@@ -5,6 +5,9 @@
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
 
+[bootstrap.services.mise-history]
+  builtin = "history-watch"
+
 [bootstrap.users.kjm]
   create_home = true
   group = "kjm"
