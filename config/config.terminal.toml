@@ -1,5 +1,5 @@
 [bootstrap.packages]
-kitty="latest"
-  ghostty="latest"
-  wezterm="latest"
-  alacritty="latest"
+  kitty     = "latest"
+  ghostty   = "latest"
+  wezterm   = "latest"
+  alacritty = "latest"
