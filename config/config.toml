@@ -1,37 +1,31 @@
-[settings]
-
-  [settings.ruby]
-    compile = false
 
 [tools]
-  ruby     = "latest"
   claude   = "latest"
-  pi       = "latest"
   opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
 
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
 
 [bootstrap.users.kjm]
-create_home=true
-group="kjm"
-groups=[
-  "wheel",
-  "input",
-  "video",
-  "scanner",
-  # "greeter",
-  # "docker",
-  # "i2c"
-]
+  create_home = true
+  group = "kjm"
+  groups = [
+    "wheel",
+    "input",
+    "video",
+    "scanner",
+    # "greeter",
+    # "docker",
+    # "i2c"
+  ]
 
 [bootstrap.files."/etc/sudoers.d/wheel"]
-content="%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
-mode="0440"
-os="linux"
+  content = "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
+  mode    = "0440"
+  os      = "linux"
 
 [bootstrap.packages]
-base-devel="latest"
-pacman-contrib="latest"
-git="latest"
-openssh="latest"
+  base-devel     = "latest"
+  pacman-contrib = "latest"
+  git            = "latest"
+  openssh        = "latest"
