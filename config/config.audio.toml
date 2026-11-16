@@ -1,0 +1,7 @@
+[bootstrap.packages]
+  pipewire       = "latest"
+  wireplumber    = "latest"
+  pipewire-pulse = "latest"
+  pipewire-alsa  = "latest"
+
+[bootstrap.services.bluetooth]
