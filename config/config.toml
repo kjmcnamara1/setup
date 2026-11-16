@@ -1,4 +1,3 @@
-
 [tools]
   claude   = "latest"
   opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
