@@ -44,6 +44,13 @@
   mode    = "0440"
   os      = "linux"
 
+# 6. services
+[bootstrap.services.mise-history]
+  builtin = "history-watch"
+
+[bootstrap.services.mise-tool-update]
+  builtin = "tool-update"
+
 # 10. dotfiles
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
@@ -59,12 +66,6 @@
   # 13. macos-launchd-agents
 
   # 14. linux-systemd-units
-
-[bootstrap.services.mise-history]
-  builtin = "history-watch"
-
-[bootstrap.services.mise-tool-update]
-  builtin = "tool-update"
 
 # 15. user
 [bootstrap.user]
