@@ -1,10 +1,14 @@
+[settings.history]
+  fetch_interval = "30s"
+  sync_interval  = "30s"
+
 [tools]
   claude   = "latest"
   opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
 
 [dotfiles]
-  "~/.config/mise" = { mode = "track" }
-"~/.config/mise/config.toml" = {}
+  "~/.config/mise"             = { mode = "track" }
+  "~/.config/mise/config.toml" = {}
 
 [history]
   git_email = "mise@{hostname}"
