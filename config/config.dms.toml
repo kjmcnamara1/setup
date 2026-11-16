@@ -1,0 +1,47 @@
+[bootstrap.packages]
+  dms-shell             = "latest"
+  quickshell            = "latest"
+  matugen               = "latest"
+  niri                  = "latest"
+  dux-greeter-bin       = "latest"
+  dsearch-bin           = "latest"
+  qt6-multimedia        = "latest"
+  cava                  = "latest"
+  power-profiles-daemon = "latest"
+  cups-pk-helper        = "latest"
+  qt6-imageformats      = "latest"
+  kimageformats         = "latest"
+  i2c-tools             = "latest"
+  fprintd               = "latest"
+
+  wl-clipboard = "latest"
+  uwsm         = "latest"
+
+  grim    = "latest"
+  slurp   = "latest"
+  tensaku = "latest"
+  pinta   = "latest"
+
+  ddcutil    = "latest"
+  kdeconnect = "latest"
+
+tesseract          # core
+  tesseract-data-eng # English lang
+  tesseract-data-osd # Detects orientation of text
+  zbar               # QR code reader
+
+  nautilus
+  nautilus-python
+  ghostty-nautilus
+  sshfs
+    # OCR tool
+  # gvfs
+  # gvfs-smb
+  # gvfs-nfs
+  # gvfs-google
+  # gvfs-onedrive
+
+gnome-disk-utility
+  adw-gtk-theme
+  papirus-icon-theme
+  nordzy-cursors
