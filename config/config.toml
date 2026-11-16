@@ -31,6 +31,7 @@
   sync_interval    = "30s"
   describe_command = "claude -p --output-format text --no-session-persistence 'Describe this change to my configuration files in one line of at most 120 characters, plain text, no quotes.'"
 
+# 10. dotfiles
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
 
