@@ -30,11 +30,12 @@
   tesseract-data-osd = "latest" # Detects orientation of text
   zbar               = "latest" # QR code reader
 
-nautilus
-  nautilus-python
-  ghostty-nautilus
-  sshfs
-      # OCR tool
+  nautilus         = "latest"
+  nautilus-python  = "latest"
+  ghostty-nautilus = "latest"
+  sshfs            = "latest"
+
+  # OCR tool
   # gvfs
   # gvfs-smb
   # gvfs-nfs
