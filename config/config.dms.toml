@@ -25,6 +25,7 @@
   ddcutil    = "latest"
   kdeconnect = "latest"
 
+  # OCR tool
   tesseract          = "latest" # core
   tesseract-data-eng = "latest" # English lang
   tesseract-data-osd = "latest" # Detects orientation of text
@@ -35,12 +36,11 @@
   ghostty-nautilus = "latest"
   sshfs            = "latest"
 
-  # OCR tool
-  gvfs          = "latest"
-  gvfs-smb      = "latest"
-  gvfs-nfs      = "latest"
-  gvfs-google   = "latest"
-  gvfs-onedrive = "latest"
+  # gvfs          = "latest"
+  # gvfs-smb      = "latest"
+  # gvfs-nfs      = "latest"
+  # gvfs-google   = "latest"
+  # gvfs-onedrive = "latest"
 
   gnome-disk-utility = "latest"
   adw-gtk-theme      = "latest"
