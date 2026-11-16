@@ -1,1 +1,13 @@
-/home/kjm/.local/share/chezmoi/home/dot_config/mise/.config.toml
+[settings]
+
+  [settings.ruby]
+    compile = false
+
+[tools]
+  ruby     = "latest"
+  claude   = "latest"
+  pi       = "latest"
+  opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
+
+[dotfiles]
+  "~/.config/mise" = { mode = "track" }
