@@ -2,6 +2,9 @@
   neovim = "latest"
   helix  = "latest"
   # tree-sitter-cli = "latest"
+  nodejs = "latest"
+  npm    = "latest"
 
 [tools]
   tree-sitter = "latest"
+  node        = "latest"
