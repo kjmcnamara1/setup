@@ -1,5 +1,5 @@
 [bootstrap.packages]
-  ghostty = "latest"
-  # kitty     = "latest"
-  # wezterm   = "latest"
-  # alacritty = "latest"
+  ghostty   = "latest"
+  kitty     = "latest"
+  wezterm   = "latest"
+  alacritty = "latest"
