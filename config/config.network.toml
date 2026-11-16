@@ -3,6 +3,7 @@
   iwd            = "latest"
 
 [bootstrap.files."/etc/NetworkManager/conf.d/wifi_backend.conf"]
+  notify = ["NetworkManager"]
   content = """
 [device]
 wifi.backend=iwd
@@ -15,3 +16,5 @@ BandModifier6GHz=2.0
 BandModifier5GHz=1.5
 BandModifier2_4GHz=0.5
 """
+
+[bootstrap.services.NetworkManager]
