@@ -1,4 +1,4 @@
 [bootstrap.packages]
   cups = "latest"
 
-[bootstrap.services.cups.socket]
+[bootstrap.services."cups.socket"]
