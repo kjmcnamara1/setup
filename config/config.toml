@@ -44,7 +44,7 @@
   mode    = "0440"
   os      = "linux"
 
-# 6. services
+# 6. services w/o requires_tools = true
 [bootstrap.services.mise-history]
   builtin = "history-watch"
 
