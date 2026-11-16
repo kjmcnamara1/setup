@@ -1,1 +1,7 @@
 [bootstrap.files."/etc/fstab"]
+  id = "nas"
+  block = """
+# NAS
+192.168.0.10:/mnt/md1 /mnt/NAS nfs defaults,nofail 0 0
+
+"""
