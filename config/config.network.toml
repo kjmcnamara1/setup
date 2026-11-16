@@ -10,6 +10,7 @@ wifi.backend=iwd
 """
 
 [bootstrap.files."/etc/iwd/main.conf"]
+  notify = ["NetworkManager"]
   content = """
 [Rank]
 BandModifier6GHz=2.0
