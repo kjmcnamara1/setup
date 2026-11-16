@@ -1,4 +1,3 @@
-
 [bootstrap.packages]
   git = "latest"
   # git-delta  = "latest"
