@@ -1,6 +1,7 @@
 [settings.history]
-  fetch_interval = "30s"
-  sync_interval  = "30s"
+  fetch_interval   = "30s"
+  sync_interval    = "30s"
+  describe_command = "claude -p --output-format text --no-session-persistence 'Describe this change to my configuration files in one line of at most 120 characters, plain text, no quotes.'"
 
 [tools]
   claude   = "latest"
