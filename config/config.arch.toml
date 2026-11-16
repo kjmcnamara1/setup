@@ -8,6 +8,7 @@
   zram-generator = "latest"
   efibootmgr     = "latest"
   sudo           = "latest"
+  snapper        = "latest"
   snap-pac       = "latest"
   dosfstools     = "latest"
   mtools         = "latest"
