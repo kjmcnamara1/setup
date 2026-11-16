@@ -1,4 +1,3 @@
-
 [bootstrap.packages]
   base-devel     = "latest"
   pacman-contrib = "latest"
@@ -9,7 +8,6 @@
   avahi          = "latest"
   nss-mdns       = "latest"
   cups           = "latest"
-  nfs-utils      = "latest"
   ntfs-3g        = "latest"
   reflector      = "latest"
   zram-generator = "latest"
