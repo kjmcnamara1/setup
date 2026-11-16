@@ -1,0 +1,4 @@
+
+[bootstrap.packages]
+  avahi    = "latest"
+  nss-mdns = "latest"
