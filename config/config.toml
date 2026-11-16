@@ -48,7 +48,6 @@
   pv           = "latest"
   tldr         = "latest"
   fastfetch    = "latest"
-  udiskie      = "latest"
   bonsai       = "latest"
   gum          = "latest"
   bottom       = "latest"
