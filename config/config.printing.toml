@@ -7,5 +7,9 @@
   avahi                 = "latest"
   nss-mdns              = "latest"
   system-config-printer = "latest"
+  sane                  = "latest"
+  libksane              = "latest"
+  sane-airscan          = "latest"
+  simple-scan           = "latest"
 
 [bootstrap.services."cups.socket"]
