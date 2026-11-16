@@ -104,6 +104,9 @@
   opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
   herdr    = "latest"
   cliamp   = "latest"
+  uv       = "latest"
+  pixi     = "latest"
+  yt-dlp   = "latest"
 
   # 17. packages from package manager plugins
 
