@@ -25,6 +25,8 @@
   builtin = "tool-update"
 
 # 1. accounts
+[bootstrap.groups.kjm]
+
 [bootstrap.users.kjm]
   create_home = true
   group = "kjm"
