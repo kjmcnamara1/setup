@@ -1,3 +1,19 @@
+# 1. accounts
+[bootstrap.groups.kjm]
+
+[bootstrap.users.kjm]
+  create_home = true
+  group = "kjm"
+  groups = [
+    "wheel",
+    "input",
+    "video",
+    "scanner",
+    # "greeter",
+    # "docker",
+    # "i2c"
+  ]
+
 [settings.history]
   fetch_interval   = "30s"
   sync_interval    = "30s"
@@ -23,22 +39,6 @@
 
 [bootstrap.services.mise-tool-update]
   builtin = "tool-update"
-
-# 1. accounts
-[bootstrap.groups.kjm]
-
-[bootstrap.users.kjm]
-  create_home = true
-  group = "kjm"
-  groups = [
-    "wheel",
-    "input",
-    "video",
-    "scanner",
-    # "greeter",
-    # "docker",
-    # "i2c"
-  ]
 
 [bootstrap.user]
   login_shell = "fish"
