@@ -48,6 +48,7 @@
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
 
+# 11. mise-shell-activate
 [bootstrap.mise_shell_activate]
   bash = true
   zsh  = true
