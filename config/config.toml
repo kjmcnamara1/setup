@@ -20,6 +20,9 @@
 [bootstrap.services.mise-history]
   builtin = "history-watch"
 
+[bootstrap.services.mise-tool-update]
+  builtin = "tool-update"
+
 [bootstrap.users.kjm]
   create_home = true
   group = "kjm"
