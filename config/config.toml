@@ -58,6 +58,8 @@
 
   # 13. macos-launchd-agents
 
+  # 14. linux-systemd-units
+
 [bootstrap.services.mise-history]
   builtin = "history-watch"
 
