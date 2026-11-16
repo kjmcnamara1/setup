@@ -33,6 +33,9 @@
     # "i2c"
   ]
 
+[bootstrap.user]
+  login_shell = "fish"
+
 [bootstrap.files."/etc/sudoers.d/wheel"]
   content = "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
   mode    = "0440"
