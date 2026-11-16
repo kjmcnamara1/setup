@@ -95,15 +95,15 @@
 
 # 16. tools
 [tools]
-  claude         = "latest"
-  opencode       = { version = "latest", allow_builds = ["@opencode/cli"] }
-  herdr          = "latest"
-  cliamp         = "latest"
-  silicon        = "latest"
-  vhs            = "latest"
-  asciinema      = "latest"
-  asciinema-edit = "latest"
-  asciinema-agg  = "latest"
+  claude   = "latest"
+  opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
+  herdr    = "latest"
+  cliamp   = "latest"
+  silicon  = "latest"
+  vhs      = "latest"
+  # asciinema      = "latest"
+  # asciinema-edit = "latest"
+  # asciinema-agg  = "latest"
 
   # 17. packages from package manager plugins
 
