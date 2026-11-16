@@ -35,7 +35,6 @@
   nautilus-python  = "latest"
   ghostty-nautilus = "latest"
   sshfs            = "latest"
-
   # gvfs          = "latest"
   # gvfs-smb      = "latest"
   # gvfs-nfs      = "latest"
