@@ -1,0 +1,4 @@
+[bootstrap.packages]
+  bluez       = "latest"
+  bluez-utils = "latest"
+  bluetui     = "latest"
