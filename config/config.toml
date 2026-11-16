@@ -18,6 +18,13 @@
 
   # 2. plugins
 
+# 3. files phase = "pre-packages"
+# 5. files phase = "post-packages"
+[bootstrap.files."/etc/sudoers.d/wheel"]
+  content = "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
+  mode    = "0440"
+  os      = "linux"
+
 [settings.history]
   fetch_interval   = "30s"
   sync_interval    = "30s"
@@ -42,11 +49,6 @@
 
 [bootstrap.user]
   login_shell = "fish"
-
-[bootstrap.files."/etc/sudoers.d/wheel"]
-  content = "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
-  mode    = "0440"
-  os      = "linux"
 
 [bootstrap.packages]
   man-db    = "latest"
