@@ -1,3 +1,9 @@
 [bootstrap.packages]
   networkmanager = "latest"
   iwd            = "latest"
+
+[bootstrap.files."/etc/NetworkManager/conf.d/wifi_backend.conf"]
+  content = """
+[device]
+wifi.backend=iwd
+"""
