@@ -1,4 +1,5 @@
 [bootstrap.files."/etc/fstab"]
+  os = "linux"
   id = "nas"
   block = """
 # NAS
