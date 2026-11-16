@@ -83,7 +83,11 @@
   opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
 
   # 17. packages from package manager plugins
+
   # 18. settings through bootstrap settings plugins
+
   # 19. services with requires_tools = true
+
   # 20. task [tasks.bootstrap]
+
   # 21. final-hook
