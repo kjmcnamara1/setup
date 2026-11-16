@@ -3,8 +3,6 @@
   pacman-contrib = "latest"
   btrfs-progs    = "latest"
   plymouth       = "latest"
-  avahi          = "latest"
-  nss-mdns       = "latest"
   cups           = "latest"
   ntfs-3g        = "latest"
   reflector      = "latest"
