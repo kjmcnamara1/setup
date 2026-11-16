@@ -2,7 +2,7 @@
   base-devel     = "latest"
   pacman-contrib = "latest"
   btrfs-progs    = "latest"
-  plymouth       = "latest" # boot module?
+  plymouth       = "latest" # boot module? plymouth,uki,systemd-boot,efibootmgr,snapper
   ntfs-3g        = "latest"
   reflector      = "latest" # reflector module? with /etc/xdg/reflector/reflector.conf
   zram-generator = "latest"
