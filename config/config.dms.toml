@@ -36,11 +36,11 @@
   sshfs            = "latest"
 
   # OCR tool
-  # gvfs="latest"
-  # gvfs-smb="latest"
-  # gvfs-nfs="latest"
-  # gvfs-google="latest"
-  # gvfs-onedrive="latest"
+  gvfs          = "latest"
+  gvfs-smb      = "latest"
+  gvfs-nfs      = "latest"
+  gvfs-google   = "latest"
+  gvfs-onedrive = "latest"
 
   gnome-disk-utility = "latest"
   adw-gtk-theme      = "latest"
