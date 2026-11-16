@@ -13,4 +13,5 @@
   simple-scan           = "latest"
 
 [bootstrap.services."cups.socket"]
+
 [bootstrap.services.avahi-daemon]
