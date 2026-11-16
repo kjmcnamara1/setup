@@ -25,16 +25,16 @@
   ddcutil    = "latest"
   kdeconnect = "latest"
 
-tesseract          # core
-  tesseract-data-eng # English lang
-  tesseract-data-osd # Detects orientation of text
-  zbar               # QR code reader
+  tesseract          = "latest" # core
+  tesseract-data-eng = "latest" # English lang
+  tesseract-data-osd = "latest" # Detects orientation of text
+  zbar               = "latest" # QR code reader
 
-  nautilus
+nautilus
   nautilus-python
   ghostty-nautilus
   sshfs
-    # OCR tool
+      # OCR tool
   # gvfs
   # gvfs-smb
   # gvfs-nfs
