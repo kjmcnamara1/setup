@@ -36,13 +36,13 @@
   sshfs            = "latest"
 
   # OCR tool
-  # gvfs
-  # gvfs-smb
-  # gvfs-nfs
-  # gvfs-google
-  # gvfs-onedrive
+  # gvfs="latest"
+  # gvfs-smb="latest"
+  # gvfs-nfs="latest"
+  # gvfs-google="latest"
+  # gvfs-onedrive="latest"
 
-gnome-disk-utility
-  adw-gtk-theme
-  papirus-icon-theme
-  nordzy-cursors
+  gnome-disk-utility = "latest"
+  adw-gtk-theme      = "latest"
+  papirus-icon-theme = "latest"
+  nordzy-cursors     = "latest"
