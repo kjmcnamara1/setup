@@ -1,2 +1,5 @@
 [bootstrap.packages]
   interception-caps2esc = "latest"
+
+[bootstrap.files."/etc/interception/udevmon.d/caps2esc.yaml"]
+  notify = ["udevmon"]
