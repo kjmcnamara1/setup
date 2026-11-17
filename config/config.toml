@@ -101,11 +101,11 @@
 [tools]
   claude   = "latest"
   opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
-  herdr    = "latest"
-  cliamp   = "latest"
-  uv       = "latest"
-  pixi     = "latest"
-  yt-dlp   = "latest"
+  herdr    = { version = "latest", lazy = true }
+  cliamp   = { version = "latest", lazy = true }
+  uv       = { version = "latest", lazy = true }
+  pixi     = { version = "latest", lazy = true }
+  yt-dlp   = { version = "latest", lazy = true }
 
   # 17. packages from package manager plugins
 
