@@ -9,6 +9,8 @@
 wifi.backend=iwd
 """
 
+[bootstrap.directories."/etc/iwd"]
+
 [bootstrap.files."/etc/iwd/main.conf"]
   notify = ["NetworkManager"]
   content = """
