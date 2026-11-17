@@ -1,10 +1,10 @@
 [bootstrap.packages]
+aur:dsearch-bin           = "latest"
   dms-shell             = "latest"
   quickshell            = "latest"
   matugen               = "latest"
   niri                  = "latest"
   "aur:dux-greeter-bin" = "latest"
-  dsearch-bin           = "latest"
   qt6-multimedia        = "latest"
   cava                  = "latest"
   power-profiles-daemon = "latest"
@@ -17,10 +17,10 @@
   wl-clipboard = "latest"
   uwsm         = "latest"
 
-  grim    = "latest"
-  slurp   = "latest"
-  tensaku = "latest"
-  pinta   = "latest"
+aur:tensaku-bin = "latest"
+  grim  = "latest"
+  slurp = "latest"
+  pinta = "latest"
 
   ddcutil    = "latest"
   kdeconnect = "latest"
