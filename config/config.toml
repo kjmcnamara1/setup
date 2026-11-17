@@ -6,10 +6,6 @@
 [history]
   git_email = "mise@{hostname}"
 
-  [history.origin]
-    url    = "git@github.com:kjmcnamara1/setup"
-    branch = "main"
-
 # https://mise.jdx.dev/bootstrap.html#how-it-runs
 # 1. accounts
 [bootstrap.groups.kjm]
