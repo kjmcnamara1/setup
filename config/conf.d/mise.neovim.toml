@@ -1,6 +1,7 @@
 [bootstrap.packages]
-  neovim = "latest"
-  helix  = "latest"
+  neovim   = "latest"
+  helix    = "latest"
+  luarocks = "latest"
   # tree-sitter-cli = "latest"
   # nodejs          = "latest"
   # npm             = "latest"
