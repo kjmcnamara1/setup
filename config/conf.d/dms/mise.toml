@@ -1,10 +1,10 @@
 [bootstrap.packages]
-  "aur:dux-search-bin"  = "latest"
+  niri                  = "latest"
   dms-shell             = "latest"
   quickshell            = "latest"
-  matugen               = "latest"
-  niri                  = "latest"
   "aur:dux-greeter-bin" = "latest"
+  "aur:dux-search-bin"  = "latest"
+  matugen               = "latest"
   qt6-multimedia        = "latest"
   cava                  = "latest"
   power-profiles-daemon = "latest"
