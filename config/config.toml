@@ -95,7 +95,6 @@
 
 # 15. user
 [bootstrap.user]
-  version     = "latest"
   login_shell = "fish"
 
 # 16. tools
