@@ -37,5 +37,5 @@ fi
   restart     = "always"
   restart_sec = 2
 
-[bootstrap.services.udiskie]
-  scope = "user"
+  # [bootstrap.services.udiskie]
+  #   scope = "user"
