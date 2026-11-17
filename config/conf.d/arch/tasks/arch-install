@@ -325,9 +325,12 @@ echo "root:$USERPASS" | chpasswd
 echo "$USERNAME:$USERPASS" | chpasswd
 if [[ -n "${INSTALL_DEBUG:-}" ]]; then set -x; fi
 
-# @games is mounted at /home/$USERNAME/Games before this user exists, so its
-# root inode is still owned by root -- fix that up now.
-chown "$USERNAME:$USERNAME" "/home/$USERNAME/Games"
+# @games is mounted at /home/$USERNAME/Games before this user exists, so the
+# `mkdir -p` for its mount point created /home/$USERNAME as root. useradd -m then
+# sees an existing home and neither chowns it nor copies /etc/skel -- do both now.
+cp -a --update=none /etc/skel/. "/home/$USERNAME/"
+chown -R "$USERNAME:$USERNAME" "/home/$USERNAME"
+chmod 700 "/home/$USERNAME"
 
 mkdir -p /etc/sudoers.d
 echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
