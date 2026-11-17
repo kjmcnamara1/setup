@@ -11,5 +11,5 @@
   baobab                 = "latest"
   evince                 = "latest"
   "aur:localsend"        = "latest"
-  zed-preview-bin        = "latest"
+  "aur:zed-preview-bin"  = "latest"
   # visual-studio-code-bin = "latest"
