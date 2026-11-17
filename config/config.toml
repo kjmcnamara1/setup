@@ -106,7 +106,6 @@
   uv       = "latest"
   pixi     = "latest"
   yt-dlp   = "latest"
-"github:superultrainc/superwhisper-linux-releases" = "latest"
 
   # 17. packages from package manager plugins
 
