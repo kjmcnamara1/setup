@@ -1,5 +1,5 @@
 [bootstrap.packages]
-  "aur:dsearch-bin"     = "latest"
+  "aur:dux-search-bin"  = "latest"
   dms-shell             = "latest"
   quickshell            = "latest"
   matugen               = "latest"
