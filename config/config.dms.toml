@@ -41,10 +41,10 @@
   # gvfs-google      = "latest"
   # gvfs-onedrive    = "latest"
 
-  gnome-disk-utility = "latest"
-  adw-gtk-theme      = "latest"
-  papirus-icon-theme = "latest"
-  nordzy-cursors     = "latest"
+  gnome-disk-utility   = "latest"
+  adw-gtk-theme        = "latest"
+  papirus-icon-theme   = "latest"
+  "aur:nordzy-cursors" = "latest"
 
 [bootstrap.files."~/.config/systemd/user/niri.service.d/dms.conf"]
   content = """
