@@ -53,6 +53,18 @@ if ! command -v pacstrap &> /dev/null; then
   exit 1
 fi
 
+# The ESP (vfat) and root (btrfs) mounts need kernel modules for the *running* kernel.
+# Upgrading the `linux` package on the live ISO (pacman -Syu) deletes them, and the
+# mounts then fail with "unknown filesystem type" after the disk is already wiped.
+for fs_mod in vfat btrfs; do
+  if ! modprobe "$fs_mod" 2> /dev/null; then
+    echo "Kernel module '${fs_mod}' can't be loaded for the running kernel ($(uname -r))." >&2
+    echo "The live ISO's kernel package was probably upgraded. Reboot the ISO, and upgrade with" >&2
+    echo "'pacman -Syu --ignore linux' instead. No disks have been changed." >&2
+    exit 1
+  fi
+done
+
 if ! command -v gum &> /dev/null; then
   echo "[*] Installing gum..."
   sudo pacman -Sy --noconfirm --needed gum
