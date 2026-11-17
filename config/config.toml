@@ -99,13 +99,15 @@
 
 # 16. tools
 [tools]
-  claude   = { version = "latest", lazy = true }
-  opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
-  herdr    = { version = "latest", lazy = true }
-  cliamp   = { version = "latest", lazy = true }
-  uv       = { version = "latest", lazy = true }
-  pixi     = { version = "latest", lazy = true }
-  yt-dlp   = { version = "latest", lazy = true }
+  claude = { version = "latest", lazy = true }
+  opencode = { version = "latest", allow_builds = [
+    "@opencode/cli",
+  ], lazy = true }
+  herdr = { version = "latest", lazy = true }
+  cliamp = { version = "latest", lazy = true }
+  uv = { version = "latest", lazy = true }
+  pixi = { version = "latest", lazy = true }
+  yt-dlp = { version = "latest", lazy = true }
 
   # 17. packages from package manager plugins
 
