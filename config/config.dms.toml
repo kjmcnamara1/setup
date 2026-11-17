@@ -45,3 +45,6 @@
   adw-gtk-theme      = "latest"
   papirus-icon-theme = "latest"
   nordzy-cursors     = "latest"
+
+[bootstrap.services.dms]
+  scope = "user"
