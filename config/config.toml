@@ -79,8 +79,8 @@
 
 # 10. dotfiles
 [dotfiles]
-  "~/.config/mise" = { mode = "track" }
-"~/.config/systemd/user/udiskie.service" = { mode = "track" }
+  "~/.config/mise"                         = { mode = "track" }
+  "~/.config/systemd/user/udiskie.service" = { mode = "track" }
 
 # 11. mise-shell-activate
 [bootstrap.mise_shell_activate]
