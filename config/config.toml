@@ -106,6 +106,7 @@
   uv       = "latest"
   pixi     = "latest"
   yt-dlp   = "latest"
+"github:kjmcnamara1/cecilia" = "latest"
 
   # 17. packages from package manager plugins
 
