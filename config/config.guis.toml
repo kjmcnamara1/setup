@@ -1,7 +1,7 @@
 [bootstrap.packages]
   "aur:brave-origin-bin" = "latest"
   libreoffice-fresh      = "latest"
-  proton-pass-bin        = "latest"
+  "aur:proton-pass-bin"  = "latest"
   imv                    = "latest"
   mpv                    = "latest"
   mpv-mpris              = "latest"
