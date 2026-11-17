@@ -30,8 +30,8 @@ LOG=/var/log/arch-install.log
 trap 'rc=$?; echo -e "\n[!] Failed on line ${LINENO} (rc=${rc}): ${BASH_COMMAND}\n    Nothing after that point was applied. Log: ${LOG}" >&2' ERR
 
 start_logging() {
-    exec > >(tee -a "$LOG") 2>&1
-    if [[ -n "${INSTALL_DEBUG:-}" ]]; then set -x; fi
+  exec > >(tee -a "$LOG") 2>&1
+  if [[ -n "${INSTALL_DEBUG:-}" ]]; then set -x; fi
 }
 
 # --------------------------------------------------------------------------
@@ -39,18 +39,18 @@ start_logging() {
 # --------------------------------------------------------------------------
 
 if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root (it is meant to be run from the archiso live environment)." >&2
-    exit 1
+  echo "This script must be run as root (it is meant to be run from the archiso live environment)." >&2
+  exit 1
 fi
 
 if [[ ! -d /sys/firmware/efi/efivars ]]; then
-    echo "This script only supports UEFI installs (systemd-boot requires UEFI)." >&2
-    exit 1
+  echo "This script only supports UEFI installs (systemd-boot requires UEFI)." >&2
+  exit 1
 fi
 
 if ! command -v pacstrap &> /dev/null; then
-    echo "pacstrap not found -- this script must be run from the archiso live environment." >&2
-    exit 1
+  echo "pacstrap not found -- this script must be run from the archiso live environment." >&2
+  exit 1
 fi
 
 source scripts/gum-helper.sh
@@ -63,21 +63,21 @@ section "Arch Linux Install"
 
 HOSTNAME=""
 while [[ -z "$HOSTNAME" ]]; do
-    HOSTNAME=$(gum input --placeholder "archlinux" --prompt "Hostname: ")
+  HOSTNAME=$(gum input --placeholder "archlinux" --prompt "Hostname: ")
 done
 
 USERNAME=""
 while [[ -z "$USERNAME" ]]; do
-    USERNAME=$(gum input --placeholder "admin" --prompt "Admin username: " --value "kjm")
+  USERNAME=$(gum input --placeholder "admin" --prompt "Admin username: " --value "kjm")
 done
 
 while true; do
-    PASSWORD=$(gum input --password --placeholder "password" --prompt "Admin/root password: ")
-    PASSWORD_CONFIRM=$(gum input --password --placeholder "confirm password" --prompt "Confirm password: ")
-    if [[ -n "$PASSWORD" && "$PASSWORD" == "$PASSWORD_CONFIRM" ]]; then
-        break
+  PASSWORD=$(gum input --password --placeholder "password" --prompt "Admin/root password: ")
+  PASSWORD_CONFIRM=$(gum input --password --placeholder "confirm password" --prompt "Confirm password: ")
+  if [[ -n "$PASSWORD" && "$PASSWORD" == "$PASSWORD_CONFIRM" ]]; then
+    break
   fi
-    warn "Passwords did not match (or were empty) -- try again."
+  warn "Passwords did not match (or were empty) -- try again."
 done
 
 section "Select install drive"
@@ -85,25 +85,25 @@ warn "ALL DATA on the selected drive will be permanently erased."
 
 mapfile -t DRIVE_LIST < <(lsblk -dpno NAME,SIZE,MODEL | grep -Ev 'loop|sr0' || true)
 if [[ ${#DRIVE_LIST[@]} -eq 0 ]]; then
-    echo "No suitable block devices found." >&2
-    exit 1
+  echo "No suitable block devices found." >&2
+  exit 1
 fi
 
 DRIVE_CHOICE=$(printf '%s\n' "${DRIVE_LIST[@]}" | gum choose --header "Select a drive to install Arch Linux to:")
 DISK=$(awk '{print $1}' <<< "$DRIVE_CHOICE")
 
 if ! gum confirm "This will ERASE ALL DATA on ${DISK}. Continue?"; then
-    echo "Aborted."
-    exit 1
+  echo "Aborted."
+  exit 1
 fi
 
 # Partition suffix helper (nvme/mmcblk need a 'p' before the partition number)
 part() {
-    local d="$1" n="$2"
-    if [[ "$d" =~ (nvme|mmcblk) ]]; then
-        echo "${d}p${n}"
+  local d="$1" n="$2"
+  if [[ "$d" =~ (nvme|mmcblk) ]]; then
+    echo "${d}p${n}"
   else
-        echo "${d}${n}"
+    echo "${d}${n}"
   fi
 }
 ESP_PART=$(part "$DISK" 1)
@@ -121,7 +121,7 @@ section "Partitioning ${DISK}"
 wipefs -af "$DISK"
 sgdisk --zap-all "$DISK"
 sgdisk -n1:0:+1GiB -t1:ef00 -c1:ESP "$DISK"
-sgdisk -n2:0:0     -t2:8300 -c2:ArchRoot "$DISK"
+sgdisk -n2:0:0 -t2:8300 -c2:ArchRoot "$DISK"
 partprobe "$DISK"
 sleep 2
 
@@ -141,9 +141,9 @@ btrfs subvolume create /mnt/@snapshots
 btrfs subvolume create /mnt/@var_log
 btrfs subvolume create /mnt/@games
 for sv in @ @home @snapshots @var_log @games; do
-    btrfs subvolume show "/mnt/$sv" > /dev/null 2>&1 || {
-                                                         echo "[!] btrfs subvolume $sv was not created" >&2
-                                                                                                             exit 1
+  btrfs subvolume show "/mnt/$sv" > /dev/null 2>&1 || {
+    echo "[!] btrfs subvolume $sv was not created" >&2
+    exit 1
   }
 done
 umount /mnt
@@ -152,11 +152,11 @@ MOUNT_OPTS="noatime,compress=zstd,space_cache=v2,discard=async"
 
 mount -o "${MOUNT_OPTS},subvol=@" "$ROOT_PART" /mnt
 mkdir -p /mnt/{home,.snapshots,var/log,boot}
-mount -o "${MOUNT_OPTS},subvol=@home"      "$ROOT_PART" /mnt/home
+mount -o "${MOUNT_OPTS},subvol=@home" "$ROOT_PART" /mnt/home
 mount -o "${MOUNT_OPTS},subvol=@snapshots" "$ROOT_PART" /mnt/.snapshots
-mount -o "${MOUNT_OPTS},subvol=@var_log"   "$ROOT_PART" /mnt/var/log
+mount -o "${MOUNT_OPTS},subvol=@var_log" "$ROOT_PART" /mnt/var/log
 mkdir -p "/mnt/home/$USERNAME/Games"
-mount -o "${MOUNT_OPTS},subvol=@games"     "$ROOT_PART" "/mnt/home/$USERNAME/Games"
+mount -o "${MOUNT_OPTS},subvol=@games" "$ROOT_PART" "/mnt/home/$USERNAME/Games"
 mount "$ESP_PART" /mnt/boot
 
 require findmnt --noheadings /mnt
@@ -171,15 +171,15 @@ ROOT_UUID=$(blkid -s UUID -o value "$ROOT_PART")
 
 CPU_VENDOR=$(grep -m1 vendor_id /proc/cpuinfo | awk '{print $3}')
 if [[ "$CPU_VENDOR" == "GenuineIntel" ]]; then
-    UCODE_PKG="intel-ucode"
+  UCODE_PKG="intel-ucode"
 else
-    UCODE_PKG="amd-ucode"
+  UCODE_PKG="amd-ucode"
 fi
 info "Detected microcode package: ${UCODE_PKG}"
 
 DETECTED_TZ=$(curl -s --max-time 5 https://ipapi.co/timezone || true)
 if [[ -z "$DETECTED_TZ" || ! -f "/usr/share/zoneinfo/$DETECTED_TZ" ]]; then
-    DETECTED_TZ="America/New_York"
+  DETECTED_TZ="America/New_York"
 fi
 info "Detected timezone: ${DETECTED_TZ}"
 
@@ -190,22 +190,22 @@ info "Detected timezone: ${DETECTED_TZ}"
 section "Installing base system"
 
 PACKAGES=(
-    # user-requested
-    base base-devel pacman-contrib linux linux-firmware btrfs-progs
-    plymouth man-db man-pages git wget curl chezmoi
-    # required to support the requested features
-    "$UCODE_PKG"          # microcode
-    networkmanager iwd    # network
-    avahi nss-mdns         # mdns
-    cups                    # printing
-    nfs-utils                # for the /mnt/NAS fstab entry
-    ntfs-3g
-    reflector                 # mirrorlist optimization
-    zram-generator              # zram
-    efibootmgr                    # bootloader (systemd-boot ships with systemd)
-    sudo
-    snapper snap-pac                # snapshots
-    dosfstools mtools                  # ESP/FAT tooling
+  # user-requested
+  base base-devel pacman-contrib linux linux-firmware btrfs-progs
+  plymouth man-db man-pages git wget curl chezmoi
+  # required to support the requested features
+  "$UCODE_PKG"       # microcode
+  networkmanager iwd # network
+  avahi nss-mdns     # mdns
+  cups               # printing
+  nfs-utils          # for the /mnt/NAS fstab entry
+  ntfs-3g
+  reflector      # mirrorlist optimization
+  zram-generator # zram
+  efibootmgr     # bootloader (systemd-boot ships with systemd)
+  sudo
+  snapper snap-pac  # snapshots
+  dosfstools mtools # ESP/FAT tooling
 )
 
 pacstrap -K /mnt "${PACKAGES[@]}"
@@ -234,7 +234,7 @@ chmod 600 /mnt/etc/NetworkManager/system-connections/* 2> /dev/null || true
 # 7. Write variables + chroot configuration script
 # --------------------------------------------------------------------------
 
-{ set +x; } 2> /dev/null  # keep the password out of the xtrace log
+{ set +x; } 2> /dev/null # keep the password out of the xtrace log
 cat > /mnt/root/chroot-vars.sh << EOF
 HOSTNAME=$(printf '%q' "$HOSTNAME")
 USERNAME=$(printf '%q' "$USERNAME")
