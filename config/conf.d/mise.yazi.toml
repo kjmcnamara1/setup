@@ -5,9 +5,9 @@
   wl-clipboard   = "latest"
 
 [tools]
-  yazi        = "latest"
-  ffmpeg      = "latest"
-  poppler     = "latest"
-  resvg       = "latest"
-  imagemagick = "latest"
-  7zip        = "latest"
+  yazi        = { version = "latest", lazy = true }
+  ffmpeg      = { version = "latest", lazy = true }
+  poppler     = { version = "latest", lazy = true }
+  resvg       = { version = "latest", lazy = true }
+  imagemagick = { version = "latest", lazy = true }
+  7zip        = { version = "latest", lazy = true }

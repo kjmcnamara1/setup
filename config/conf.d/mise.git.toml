@@ -4,9 +4,9 @@
   # jjui-bin   = "latest"
 
 [tools]
-  github-cli = "latest"
-  lazygit    = "latest"
-  delta      = "latest"
-  difftastic = "latest"
-  jujutsu    = "latest"
-  jujutsu-ui = "latest"
+  github-cli = { version = "latest", lazy = true }
+  lazygit    = { version = "latest", lazy = true }
+  delta      = { version = "latest", lazy = true }
+  difftastic = { version = "latest", lazy = true }
+  jujutsu    = { version = "latest", lazy = true }
+  jujutsu-ui = { version = "latest", lazy = true }

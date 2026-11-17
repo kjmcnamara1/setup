@@ -95,19 +95,38 @@
 
 # 15. user
 [bootstrap.user]
+  version     = "latest"
   login_shell = "fish"
 
 # 16. tools
-[tools]
-  claude = { version = "latest", lazy = true }
-  opencode = { version = "latest", allow_builds = [
-    "@opencode/cli",
-  ], lazy = true }
-  herdr = { version = "latest", lazy = true }
-  cliamp = { version = "latest", lazy = true }
-  uv = { version = "latest", lazy = true }
-  pixi = { version = "latest", lazy = true }
-  yt-dlp = { version = "latest", lazy = true }
+[tools.claude]
+  version = "latest"
+  lazy    = true
+
+[tools.opencode]
+  version      = "latest"
+  lazy         = true
+  allow_builds = ["@opencode/cli"]
+
+[tools.herdr]
+  version = "latest"
+  lazy    = true
+
+[tools.cliamp]
+  version = "latest"
+  lazy    = true
+
+[tools.uv]
+  version = "latest"
+  lazy    = true
+
+[tools.pixi]
+  version = "latest"
+  lazy    = true
+
+[tools.yt-dlp]
+  version = "latest"
+  lazy    = true
 
   # 17. packages from package manager plugins
 

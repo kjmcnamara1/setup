@@ -9,6 +9,6 @@
   url = "https://github.com/kjmcnamara1/nvim"
 
 [tools]
-  tree-sitter = "latest"
-  node        = "latest"
-  # shellcheck  = "latest"
+  tree-sitter = { version = "latest", lazy = true }
+  node        = { version = "latest", lazy = true }
+  # shellcheck  = { version = "latest", lazy = true }
