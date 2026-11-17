@@ -5,6 +5,7 @@
 
 [history]
   git_email = "mise@{hostname}"
+
   [history.origin]
     url    = "git@github.com:kjmcnamara1/setup"
     branch = "main"
