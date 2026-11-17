@@ -67,5 +67,5 @@ session    include      system-local-login
 session    optional     pam_gnome_keyring.so auto_start
 """
 
-[bootstrap.services.dms]
-  scope = "user"
+  # [bootstrap.services.dms]
+  #   scope = "user"
