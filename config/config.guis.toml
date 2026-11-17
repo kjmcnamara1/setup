@@ -10,6 +10,6 @@
   playerctl              = "latest"
   baobab                 = "latest"
   evince                 = "latest"
-  localsend              = "latest"
+  "aur:localsend"        = "latest"
   zed-preview-bin        = "lates"
   # visual-studio-code-bin = "latest"
