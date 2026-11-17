@@ -215,7 +215,7 @@ section "Installing base system"
 PACKAGES=(
   # user-requested
   base base-devel pacman-contrib linux linux-firmware btrfs-progs
-  plymouth man-db man-pages git wget curl chezmoi
+  plymouth man-db man-pages git wget curl mise
   # required to support the requested features
   "$UCODE_PKG"       # microcode
   networkmanager iwd # network
