@@ -1,8 +1,8 @@
 [bootstrap.packages]
-  mediainfo    = "latest"
-  rich-cli     = "latest"
-  ouch         = "latest"
-  wl-clipboard = "latest"
+  mediainfo      = "latest"
+  "aur:rich-cli" = "latest"
+  ouch           = "latest"
+  wl-clipboard   = "latest"
 
 [tools]
   yazi        = "latest"
