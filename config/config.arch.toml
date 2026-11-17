@@ -29,8 +29,8 @@ fi
 
   # chaotic AUR?
 
-[dotfiles."~/.config/systemd/user/udiskie.service"]
-  mode = "track"
+[bootstrap.linux.systemd.units.udiskie]
+  description = "Auto mount USB devices"
 
 [bootstrap.services.udiskie]
   scope = "user"
