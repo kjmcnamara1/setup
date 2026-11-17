@@ -29,5 +29,7 @@ fi
 
   # chaotic AUR?
 
+[dotfiles]
+  "~/.config/systemd/user/udiskie.service" = { mode = "track" }
 [bootstrap.services.udiskie]
   scope = "user"
