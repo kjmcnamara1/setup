@@ -1,5 +1,6 @@
 [task_config]
   includes = ["tasks"]
+
 [bootstrap.packages]
   niri                  = "latest"
   dms-shell             = "latest"
