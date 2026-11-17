@@ -32,6 +32,7 @@ fi
 [bootstrap.linux.systemd.units.udiskie]
   description = "Auto mount USB devices"
   exec_start  = "/usr/bin/udiskie"
+  restart     = "always"
 
 [bootstrap.services.udiskie]
   scope = "user"
