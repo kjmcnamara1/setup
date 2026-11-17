@@ -1,5 +1,5 @@
 [bootstrap.packages]
-aur:dsearch-bin           = "latest"
+  "aur:dsearch-bin"     = "latest"
   dms-shell             = "latest"
   quickshell            = "latest"
   matugen               = "latest"
@@ -17,10 +17,10 @@ aur:dsearch-bin           = "latest"
   wl-clipboard = "latest"
   uwsm         = "latest"
 
-aur:tensaku-bin = "latest"
-  grim  = "latest"
-  slurp = "latest"
-  pinta = "latest"
+  "aur:tensaku-bin" = "latest"
+  grim              = "latest"
+  slurp             = "latest"
+  pinta             = "latest"
 
   ddcutil    = "latest"
   kdeconnect = "latest"
