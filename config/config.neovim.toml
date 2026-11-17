@@ -5,6 +5,9 @@
   # nodejs          = "latest"
   # npm             = "latest"
 
+[bootstrap.repos]
+  "~/.config/nvim" = "https://github.com/kjmcnamara1/nvim"
+
 [tools]
   tree-sitter = "latest"
   node        = "latest"
