@@ -32,7 +32,7 @@ fi
 [bootstrap.linux.systemd.units.udiskie]
   description   = "Auto mount USB devices"
   documentation = "man:udiskie(8)"
-  after         = "graphical-session.target"
+  after         = ["graphical-session.target"]
   type          = "simple"
   exec_start    = "/usr/bin/udiskie"
   restart       = "always"
