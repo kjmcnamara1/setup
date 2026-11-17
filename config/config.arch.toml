@@ -1,3 +1,15 @@
+[bootstrap.hooks.pre-packages]
+  description = "Install yay (AUR helper) if missing"
+  run = '''
+if ! command -v yay >/dev/null; then
+  sudo pacman -S --needed --noconfirm git base-devel
+  tmp=$(mktemp -d)
+  git clone --depth 1 https://aur.archlinux.org/yay-bin.git "$tmp/yay-bin"
+  (cd "$tmp/yay-bin" && makepkg -si --noconfirm)
+  rm -rf "$tmp"
+fi
+'''
+
 [bootstrap.packages]
   base-devel     = "latest"
   pacman-contrib = "latest"
