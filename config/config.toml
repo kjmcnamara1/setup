@@ -62,7 +62,6 @@
 [bootstrap.files."/etc/sudoers.d/wheel"]
   content = "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
   mode    = "0440"
-  os      = "linux"
 
 # 6. services w/o requires_tools = true
 [bootstrap.services.mise-history]
