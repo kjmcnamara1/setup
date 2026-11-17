@@ -46,5 +46,11 @@
   papirus-icon-theme = "latest"
   nordzy-cursors     = "latest"
 
+[bootstrap.files."~/.config/systemd/user/niri.service.d/dms.conf"]
+  content = """
+[Unit]
+Wants=dms.service
+"""
+
 [bootstrap.services.dms]
   scope = "user"
