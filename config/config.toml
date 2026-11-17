@@ -52,7 +52,7 @@
   pv           = "latest"
   tldr         = "latest"
   fastfetch    = "latest"
-  bonsai       = "latest"
+  "aur:bonsai" = "latest"
   gum          = "latest"
   bottom       = "latest"
   rocm-smi-lib = "latest"
