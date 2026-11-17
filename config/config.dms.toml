@@ -3,7 +3,7 @@
   quickshell            = "latest"
   matugen               = "latest"
   niri                  = "latest"
-  dux-greeter-bin       = "latest"
+  "aur:dux-greeter-bin" = "latest"
   dsearch-bin           = "latest"
   qt6-multimedia        = "latest"
   cava                  = "latest"
