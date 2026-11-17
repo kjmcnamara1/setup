@@ -46,6 +46,8 @@
   papirus-icon-theme   = "latest"
   "aur:nordzy-cursors" = "latest"
 
+[bootstrap.directories."~/.config/systemd/user/niri.service.d"]
+
 [bootstrap.files."~/.config/systemd/user/niri.service.d/dms.conf"]
   content = """
 [Unit]
