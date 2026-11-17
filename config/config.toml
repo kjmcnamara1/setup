@@ -38,6 +38,7 @@
   git          = "latest"
   wget         = "latest"
   curl         = "latest"
+  neovim       = "latest"
   openssh      = "latest"
   fish         = "latest"
   bat          = "latest"
