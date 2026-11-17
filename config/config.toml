@@ -99,7 +99,7 @@
 
 # 16. tools
 [tools]
-  claude   = "latest"
+  claude   = { version = "latest", lazy = true }
   opencode = { version = "latest", allow_builds = ["@opencode/cli"] }
   herdr    = { version = "latest", lazy = true }
   cliamp   = { version = "latest", lazy = true }
