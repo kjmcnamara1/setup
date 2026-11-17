@@ -36,7 +36,7 @@ fi
   type          = "simple"
   exec_start    = "/usr/bin/udiskie"
   restart       = "always"
-  restart_sec   = 2
+  restart_sec   = "2"
 
   # [bootstrap.services.udiskie]
   #   scope = "user"
