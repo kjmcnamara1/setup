@@ -82,6 +82,9 @@
 [dotfiles]
   "~/.config/mise" = { mode = "track" }
 
+[tools]
+delta = "latest"
+
 # 11. mise-shell-activate
 [bootstrap.mise_shell_activate]
   bash = true
