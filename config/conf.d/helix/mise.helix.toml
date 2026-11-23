@@ -1,0 +1,8 @@
+[bootstrap.packages]
+  helix = "latest"
+
+[dotfiles]
+  "~/.config/helix"                     = { mode = "track" }
+  "~/.config/bash/alias.sh/helix"       = { line = "alias hx=helix # Helix text editor" }
+  "~/.zshrc/hx-alias"                   = { line = "alias hx=helix # Helix text editor" }
+  "~/.config/fish/config.fish/hx-alias" = { line = "alias hx=helix # Helix text editor" }

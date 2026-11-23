@@ -1,0 +1,4 @@
+[bootstrap.packages]
+  openssh = "latest"
+
+[bootstrap.services.sshd]

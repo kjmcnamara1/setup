@@ -1,0 +1,11 @@
+[bootstrap.packages]
+  zsh = "latest"
+
+[dotfiles]
+  "~/.zshrc" = { source = "zshrc.tera", mode = "template" }
+
+[bootstrap.mise_shell_activate]
+  zsh = true
+
+[bootstrap.user]
+  login_shell = "zsh"

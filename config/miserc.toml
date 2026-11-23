@@ -1,0 +1,7 @@
+auto_env   = true
+env_conf_d = true
+
+[env_sets]
+  angel   = ["yay", "arch", "helix", "agents"]
+  arch-vm = ["yay", "bash", "helix"]
+  bee     = ["yay", "htpc"]

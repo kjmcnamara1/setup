@@ -1,0 +1,133 @@
+[settings.history]
+  fetch_interval   = "30s"
+  sync_interval    = "30s"
+  describe_command = "claude -p --output-format text --no-session-persistence 'Describe this change to my configuration files in one line of at most 120 characters, plain text, no quotes.'"
+
+[history]
+  git_email = "mise@{hostname}"
+
+  # https://mise.jdx.dev/bootstrap.html#how-it-runs
+
+  # 1. accounts
+  # [bootstrap.groups.kjm]
+
+  # [bootstrap.users.kjm]
+  #   create_home = true
+  #   group = "kjm"
+  #   groups = [
+  #     "wheel",
+  #     "input",
+  #     "video",
+  #     "scanner",
+  #     # "greeter",
+  #     # "docker",
+  #     # "i2c"
+  #   ]
+
+  # 2. plugins
+
+# 3. files phase = "pre-packages"
+[bootstrap.files."/etc/sudoers.d/wheel"]
+  content = "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
+  mode    = "0440"
+  phase   = "pre-packages"
+  os      = "linux"
+
+# 4. packages
+[bootstrap.packages]
+  man-db    = "latest"
+  man-pages = "latest"
+  git       = "latest"
+  wget      = "latest"
+  curl      = "latest"
+  neovim    = "latest"
+  openssh   = "latest"
+  bat       = "latest"
+  eza       = "latest"
+  jq        = "latest"
+  fd        = "latest"
+  ripgrep   = "latest"
+  fzf       = "latest"
+  zoxide    = "latest"
+  pv        = "latest"
+  tldr      = "latest"
+  fastfetch = "latest"
+  gum       = "latest"
+
+  # television   = "latest"
+  # "aur:bonsai" = "latest"
+  # silicon        = "latest"
+  # vhs            = "latest"
+  # asciinema      = "latest"
+  # asciinema-edit = "latest"
+  # asciinema-agg  = "latest"
+
+  # 5. files phase = "post-packages"
+
+# 6. services w/o requires_tools = true
+[bootstrap.services.mise-history]
+  builtin = "history-watch"
+
+[bootstrap.services.mise-tool-update]
+  builtin = "tool-update"
+
+  # 7. firewall
+
+  # 8. compose
+
+  # 9. repos
+
+# 10. dotfiles
+[dotfiles]
+  #   "~/.bashrc"                   = { mode = "track" }
+  #   "~/.config/bat"               = { mode = "track" }
+  #   "~/.config/bottom"            = { mode = "track" }
+  #   "~/.config/helix"             = { mode = "track" }
+  #   "~/.config/herdr/config.toml" = { mode = "track" }
+  #   "~/.config/mimeapps.list"     = { mode = "track" }
+  "~/.config/mise" = { mode = "track" }
+  #   "~/.config/starship.toml"     = { mode = "track" }
+  #   "~/.config/user-dirs.dirs"    = { mode = "track" }
+  #   "~/.config/wezterm"           = { mode = "track" }
+  #   "~/.config/yt-dlp"            = { mode = "track" }
+
+  # 11. mise-shell-activate
+
+  # 12. macos-defaults
+
+  # 13. macos-launchd-agents
+
+  # 14. linux-systemd-units
+
+  # 15. user
+
+# 16. tools
+[tools.herdr]
+  version = "latest"
+  lazy    = true
+
+[tools.yt-dlp]
+  version = "latest"
+  lazy    = true
+
+  # [tools.cliamp]
+  #   version = "latest"
+  #   lazy    = true
+
+  # [tools.uv]
+  #   version = "latest"
+  #   lazy    = true
+
+  # [tools.pixi]
+  #   version = "latest"
+  #   lazy    = true
+
+  # 17. packages from package manager plugins
+
+  # 18. settings through bootstrap settings plugins
+
+  # 19. services with requires_tools = true
+
+  # 20. task [tasks.bootstrap]
+
+  # 21. final-hook
