@@ -6,18 +6,6 @@
       "autosave": true,
       "encrypt": false,
       "variants": []
-    },
-    {
-      "path": "home/.config/helix",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
-    },
-    {
-      "path": "home/.config/starship.toml",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
     }
   ],
   "exclude": [],
