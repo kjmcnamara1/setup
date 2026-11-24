@@ -32,7 +32,7 @@ fallback_options="-S autodetect"
 [bootstrap.files."/boot/loader/loader.conf"]
   os = "linux"
   phase = "pre-packages"
-  mode = "0755"
+  mode = "0700" # vfat ESP mounted fmask=0077
   content = '''
 default      arch-linux.efi
 timeout      0
@@ -50,23 +50,29 @@ editor       no
     '''
 hooks='HOOKS=(base systemd plymouth autodetect microcode modconf kms keyboard sd-vconsole block filesystems fsck)'
 theme={{ vars.plymouth_theme | quote }}
-rebuild=0
+reasons=''
 
 if ! grep -qxF "$hooks" /etc/mkinitcpio.conf; then
   sudo sed -i "s/^HOOKS=.*/$hooks/" /etc/mkinitcpio.conf
-  rebuild=1
+  reasons="$reasons hooks"
 fi
 
 if [ "$(plymouth-set-default-theme)" != "$theme" ]; then
   sudo plymouth-set-default-theme "$theme"
-  rebuild=1
+  reasons="$reasons theme"
 fi
 
+# The ESP may be mounted fmask/dmask=0077, so check it as root.
 for uki in /boot/EFI/Linux/arch-linux.efi /boot/EFI/Linux/arch-linux-fallback.efi; do
-  [ -f "$uki" ] || rebuild=1
+  if ! sudo test -f "$uki"; then
+    reasons="$reasons missing:$uki"
+  elif sudo test /etc/kernel/cmdline -nt "$uki"; then
+    reasons="$reasons cmdline-newer-than:$uki"
+  fi
 done
 
-if [ "$rebuild" = 1 ]; then
+if [ -n "$reasons" ]; then
+  echo "mkinitcpio rebuild needed:$reasons"
   sudo mkinitcpio -P
 fi
 ''',
