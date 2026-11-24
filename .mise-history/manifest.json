@@ -12,22 +12,11 @@
       "autosave": true,
       "encrypt": false,
       "variants": []
-    },
-    {
-      "path": "home/.ssh/aur",
-      "autosave": true,
-      "encrypt": true,
-      "variants": []
     }
   ],
   "exclude": [
     "~/.config/mise/age.txt"
   ],
-  "recipients": [
-    "age1nmc0de6853qllzvvcg665eeg2fckmppuq80p00nwyx808s6pv5kqkwwm0d"
-  ],
-  "permissions": {
-    "home/.ssh": 448,
-    "home/.ssh/aur": 384
-  }
+  "recipients": [],
+  "permissions": {}
 }
