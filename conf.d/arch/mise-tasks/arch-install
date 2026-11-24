@@ -6,7 +6,7 @@
 # Features:
 #   - gum-driven prompts for hostname / admin user / password
 #   - drive selection from a live list of block devices
-#   - btrfs with 5 pre-configured subvolumes (@, @home, @snapshots, @var_log, @games) + zstd compression
+#   - btrfs with 5 pre-configured subvolumes (@, @home, @snapshots, @var_log) + zstd compression
 #   - unified kernel image (UKI) built by mkinitcpio, auto-discovered by systemd-boot
 #   - plymouth "bgrt" theme baked into the UKI, cmdline: "quiet splash"
 #   - amd-ucode / intel-ucode auto-detected
@@ -156,14 +156,12 @@ mkfs.btrfs -f -L ArchRoot "$ROOT_PART"
 #   @home      -> /home
 #   @snapshots -> /.snapshots
 #   @var_log   -> /var/log
-#   @games     -> /home/$USERNAME/Games
 mount "$ROOT_PART" /mnt
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@snapshots
 btrfs subvolume create /mnt/@var_log
-btrfs subvolume create /mnt/@games
-for sv in @ @home @snapshots @var_log @games; do
+for sv in @ @home @snapshots @var_log; do
   btrfs subvolume show "/mnt/$sv" > /dev/null 2>&1 || {
     echo "[!] btrfs subvolume $sv was not created" >&2
     exit 1
@@ -178,8 +176,6 @@ mkdir -p /mnt/{home,.snapshots,var/log,boot}
 mount -o "${MOUNT_OPTS},subvol=@home" "$ROOT_PART" /mnt/home
 mount -o "${MOUNT_OPTS},subvol=@snapshots" "$ROOT_PART" /mnt/.snapshots
 mount -o "${MOUNT_OPTS},subvol=@var_log" "$ROOT_PART" /mnt/var/log
-mkdir -p "/mnt/home/$USERNAME/Games"
-mount -o "${MOUNT_OPTS},subvol=@games" "$ROOT_PART" "/mnt/home/$USERNAME/Games"
 mount "$ESP_PART" /mnt/boot
 
 require findmnt --noheadings /mnt
@@ -215,20 +211,9 @@ section "Installing base system"
 PACKAGES=(
   # user-requested
   base base-devel pacman-contrib linux linux-firmware btrfs-progs
-  plymouth man-db man-pages git wget curl mise
+  git mise
   # required to support the requested features
-  "$UCODE_PKG"       # microcode
-  networkmanager iwd # network
-  avahi nss-mdns     # mdns
-  cups               # printing
-  nfs-utils          # for the /mnt/NAS fstab entry
-  ntfs-3g
-  reflector      # mirrorlist optimization
-  zram-generator # zram
-  efibootmgr     # bootloader (systemd-boot ships with systemd)
-  sudo
-  snapper snap-pac  # snapshots
-  dosfstools mtools # ESP/FAT tooling
+  "$UCODE_PKG" # microcode
 )
 
 pacstrap -K /mnt "${PACKAGES[@]}"
@@ -239,8 +224,6 @@ require test -x /mnt/usr/bin/pacman
 # --------------------------------------------------------------------------
 
 genfstab -U /mnt >> /mnt/etc/fstab
-mkdir -p /mnt/mnt/NAS
-printf '\n# NAS\n192.168.0.10:/mnt/md1 /mnt/NAS nfs defaults,nofail 0 0\n' >> /mnt/etc/fstab
 
 # --------------------------------------------------------------------------
 # 6. Copy live network configuration for first boot
@@ -252,254 +235,6 @@ cp -a /var/lib/iwd/. /mnt/var/lib/iwd/ 2> /dev/null || true
 mkdir -p /mnt/etc/NetworkManager/system-connections
 cp -a /etc/NetworkManager/system-connections/. /mnt/etc/NetworkManager/system-connections/ 2> /dev/null || true
 chmod 600 /mnt/etc/NetworkManager/system-connections/* 2> /dev/null || true
-
-# --------------------------------------------------------------------------
-# 7. Write variables + chroot configuration script
-# --------------------------------------------------------------------------
-
-{ set +x; } 2> /dev/null # keep the password out of the xtrace log
-cat > /mnt/root/chroot-vars.sh << EOF
-HOSTNAME=$(printf '%q' "$HOSTNAME")
-USERNAME=$(printf '%q' "$USERNAME")
-USERPASS=$(printf '%q' "$PASSWORD")
-UCODE_PKG=$(printf '%q' "$UCODE_PKG")
-TZ_REGION=$(printf '%q' "$DETECTED_TZ")
-ROOT_UUID=$(printf '%q' "$ROOT_UUID")
-DISK=$(printf '%q' "$DISK")
-INSTALL_DEBUG=$(printf '%q' "${INSTALL_DEBUG:-}")
-EOF
-chmod 600 /mnt/root/chroot-vars.sh
-if [[ -n "${INSTALL_DEBUG:-}" ]]; then set -x; fi
-
-cat > /mnt/root/chroot-setup.sh << 'CHSETUP'
-#!/bin/bash
-set -euo pipefail
-PS4='+ chroot:${LINENO}: '
-trap 'rc=$?; printf "\n[!] chroot-setup FAILED  line %s  rc %s  cmd: %s\n" "$LINENO" "$rc" "$BASH_COMMAND" >&2; exit $rc' ERR
-
-source /root/chroot-vars.sh
-if [[ -n "${INSTALL_DEBUG:-}" ]]; then set -x; fi
-
-step()    { printf '\n==> %s\n' "$*" >&2; }
-warn()    { printf '[!] %s\n' "$*" >&2; }
-require() { "$@" || { printf '[!] REQUIRED step failed: %s\n' "$*" >&2; exit 1; }; }
-
-# Run a non-essential step: log its failure, but never abort the install for it.
-extra() {
-    local desc="$1" rc=0; shift
-    "$@" || rc=$?
-    if [[ $rc -ne 0 ]]; then
-        warn "[extra] ${desc} failed (rc=${rc}) -- continuing; fix it after first boot"
-    fi
-    return 0
-}
-
-step "Timezone + clock"
-ln -sf "/usr/share/zoneinfo/$TZ_REGION" /etc/localtime
-hwclock --systohc || warn "hwclock --systohc failed (no RTC?) -- continuing"
-extra "enable systemd-timesyncd" systemctl enable systemd-timesyncd.service
-
-step "Locale"
-sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
-locale-gen
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
-echo "KEYMAP=us" > /etc/vconsole.conf
-
-step "Hostname"
-echo "$HOSTNAME" > /etc/hostname
-cat > /etc/hosts <<HOSTS
-127.0.0.1   localhost
-::1         localhost
-127.0.1.1   $HOSTNAME.localdomain $HOSTNAME
-HOSTS
-
-step "Root + admin user"
-getent group scanner >/dev/null || groupadd scanner
-if id "$USERNAME" >/dev/null 2>&1; then
-    usermod -aG wheel,input,video,scanner -s /bin/bash "$USERNAME"
-else
-    useradd -m -G wheel,input,video,scanner -s /bin/bash "$USERNAME"
-fi
-{ set +x; } 2>/dev/null   # keep passwords out of the xtrace log
-echo "root:$USERPASS" | chpasswd
-echo "$USERNAME:$USERPASS" | chpasswd
-if [[ -n "${INSTALL_DEBUG:-}" ]]; then set -x; fi
-
-# @games is mounted at /home/$USERNAME/Games before this user exists, so the
-# `mkdir -p` for its mount point created /home/$USERNAME as root. useradd -m then
-# sees an existing home and neither chowns it nor copies /etc/skel -- do both now.
-cp -a --update=none /etc/skel/. "/home/$USERNAME/"
-chown -R "$USERNAME:$USERNAME" "/home/$USERNAME"
-chmod 700 "/home/$USERNAME"
-
-mkdir -p /etc/sudoers.d
-echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
-chmod 440 /etc/sudoers.d/wheel
-visudo -c
-
-step "zram"
-cat > /etc/systemd/zram-generator.conf <<ZRAM
-[zram0]
-zram-size = min(ram / 2, 8192)
-compression-algorithm = zstd
-ZRAM
-
-step "NetworkManager / iwd"
-mkdir -p /etc/NetworkManager/conf.d
-cat > /etc/NetworkManager/conf.d/wifi_backend.conf <<NMCONF
-[device]
-wifi.backend=iwd
-NMCONF
-# Rank 6GHz > 5GHz > 2.4GHz so iwd always prefers the fastest band available
-# for a given SSID, on every network it knows, not just one.
-mkdir -p /etc/iwd
-cat > /etc/iwd/main.conf <<IWDCONF
-[Rank]
-BandModifier6GHz=2.0
-BandModifier5GHz=1.5
-BandModifier2_4GHz=0.5
-IWDCONF
-systemctl enable NetworkManager.service
-
-step "mDNS"
-sed -i 's/^hosts:.*/hosts: mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] files myhostname dns/' /etc/nsswitch.conf
-extra "enable avahi-daemon" systemctl enable avahi-daemon.service
-
-step "Printing"
-extra "enable cups.socket" systemctl enable cups.socket
-
-step "mkinitcpio -> Unified Kernel Image"
-sed -i 's/^HOOKS=.*/HOOKS=(base systemd plymouth autodetect microcode modconf kms keyboard sd-vconsole block filesystems fsck)/' /etc/mkinitcpio.conf
-
-mkdir -p /etc/kernel
-echo "root=UUID=$ROOT_UUID rootflags=subvol=@ rw quiet splash" > /etc/kernel/cmdline
-
-mkdir -p /boot/EFI/Linux
-cat > /etc/mkinitcpio.d/linux.preset <<PRESET
-ALL_config="/etc/mkinitcpio.conf"
-ALL_kver="/boot/vmlinuz-linux"
-
-PRESETS=('default' 'fallback')
-
-default_uki="/boot/EFI/Linux/arch-linux.efi"
-default_options="--cmdline /etc/kernel/cmdline"
-
-fallback_uki="/boot/EFI/Linux/arch-linux-fallback.efi"
-fallback_options="-S autodetect"
-PRESET
-
-plymouth-set-default-theme bgrt
-
-mkinitcpio -P
-# UKI is self-contained; drop the loose vmlinuz/initramfs images so /boot only has the UKIs
-rm -f /boot/vmlinuz-linux /boot/initramfs-linux.img /boot/initramfs-linux-fallback.img
-require test -s /boot/EFI/Linux/arch-linux.efi
-require test -s /boot/EFI/Linux/arch-linux-fallback.efi
-
-step "systemd-boot bootloader"
-bootctl install --esp-path=/boot
-
-mkdir -p /boot/loader
-cat > /boot/loader/loader.conf <<LOADERCONF
-default      arch-linux.efi
-timeout      1
-console-mode keep
-editor       no
-LOADERCONF
-
-# systemd-boot auto-discovers the UKIs in /boot/EFI/Linux -- no loader entries needed.
-# Keep the EFI binary current on future systemd upgrades.
-systemctl enable systemd-boot-update.service
-
-require test -f /boot/EFI/systemd/systemd-bootx64.efi
-require test -f /boot/EFI/BOOT/BOOTX64.EFI
-require test -f /boot/loader/loader.conf
-
-#  Remove all EFI boot entries before creating new one
-for entry in $(efibootmgr | grep '^Boot[0-9]' | awk -F'[* ]' '{print substr($1,5)}'); do
-  sudo efibootmgr -b "$entry" -B >/dev/null
-done
-efibootmgr --create --disk "$DISK" --part 1 --label "Linux Boot Manager" --loader '\EFI\systemd\systemd-bootx64.efi' --unicode \
-    || warn "efibootmgr could not add an NVRAM entry -- the removable-media path EFI/BOOT/BOOTX64.EFI still boots"
-
-step "Snapper (root config on the pre-created @snapshots subvolume, per Arch wiki procedure)"
-setup_snapper() {
-    if findmnt -M /.snapshots >/dev/null 2>&1; then
-        umount /.snapshots 2>/dev/null || umount -l /.snapshots
-    fi
-    if [[ -e /.snapshots ]]; then
-        btrfs subvolume delete /.snapshots 2>/dev/null || rm -rf /.snapshots
-    fi
-    snapper --no-dbus -c root create-config / || return 1
-    [[ -e /.snapshots ]] && btrfs subvolume delete /.snapshots
-    mkdir -p /.snapshots
-    mount /.snapshots || return 1
-    chmod 750 /.snapshots
-    sed -i 's/^TIMELINE_CREATE=.*/TIMELINE_CREATE="yes"/'   /etc/snapper/configs/root
-    sed -i 's/^TIMELINE_CLEANUP=.*/TIMELINE_CLEANUP="yes"/' /etc/snapper/configs/root
-    systemctl enable snapper-timeline.timer snapper-cleanup.timer
-}
-extra "snapper root config" setup_snapper
-
-step "Reflector"
-mkdir -p /etc/xdg/reflector
-cat > /etc/xdg/reflector/reflector.conf <<REFCONF
---save /etc/pacman.d/mirrorlist
---protocol https
---latest 20
---sort rate
-REFCONF
-# timer (weekly), not the service: the service blocks multi-user.target on every boot
-extra "enable reflector.timer" systemctl enable reflector.timer
-reflector --protocol https --latest 20 --sort rate --save /etc/pacman.d/mirrorlist \
-    || warn "reflector run failed -- keeping the mirrorlist from the ISO"
-
-step "pacman.conf tweaks (Color, ILoveCandy, ParallelDownloads, multilib)"
-sed -i 's/^#Color/Color/' /etc/pacman.conf
-grep -q '^ILoveCandy' /etc/pacman.conf || sed -i '/^Color/a ILoveCandy' /etc/pacman.conf
-sed -i 's/^#\?ParallelDownloads.*/ParallelDownloads = 5/' /etc/pacman.conf
-sed -i '/^#\[multilib\]/,/^#Include/ s/^#//' /etc/pacman.conf
-
-step "Chaotic-AUR + yay"
-setup_chaotic_aur() {
-    local key=3056513887B78AEB ks
-    local urls=(
-        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
-        'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-    )
-    for ks in keyserver.ubuntu.com keys.openpgp.org pgp.mit.edu; do
-        pacman-key --recv-key "$key" --keyserver "$ks" && break
-    done
-    pacman-key --list-keys "$key" >/dev/null 2>&1 || return 1
-    pacman-key --lsign-key "$key" || return 1
-    pacman -U --noconfirm "${urls[@]}" || pacman -U --noconfirm "${urls[@]}" || return 1
-    grep -q '^\[chaotic-aur\]' /etc/pacman.conf || cat >> /etc/pacman.conf <<CHAOTIC
-
-[chaotic-aur]
-Include = /etc/pacman.d/chaotic-mirrorlist
-CHAOTIC
-    pacman -Sy --noconfirm || return 1
-    pacman -S --noconfirm --needed yay || return 1
-}
-extra "chaotic-aur / yay" setup_chaotic_aur
-
-step "Chroot configuration complete."
-CHSETUP
-chmod 700 /mnt/root/chroot-setup.sh
-
-# --------------------------------------------------------------------------
-# 8. Run the chroot script
-# --------------------------------------------------------------------------
-
-section "Configuring installed system (chroot)"
-# tee so the chroot log survives into the target; pipefail still surfaces a failure.
-arch-chroot /mnt /bin/bash /root/chroot-setup.sh 2>&1 | tee /mnt/var/log/arch-chroot-setup.log
-
-rm -f /mnt/root/chroot-setup.sh /mnt/root/chroot-vars.sh
-
-# RUN MISE BOOTSTRAP
-arch-chroot /mnt /bin/bash -c "sudo -H -u $USERNAME mise bootstrap --adopt kjmcnamara1/setup -E $HOSTNAME --save-env --yes"
-arch-chroot /mnt /bin/bash -c "sudo -H -u $USERNAME mise bootstrap --adopt kjmcnamara1/setup?ref=history --replace-history --yes"
 
 # --------------------------------------------------------------------------
 # 9. Done
@@ -516,8 +251,7 @@ Arch Linux has been installed to ${DISK}.
 
 Notes:
   - Bootloader: systemd-boot, auto-discovering UKIs from /boot/EFI/Linux (ESP mounted at /boot)
-  - btrfs subvolumes: @, @home, @snapshots, @var_log, @games (compress=zstd)
-    @games is mounted at /home/${USERNAME}/Games
+  - btrfs subvolumes: @, @home, @snapshots, @var_log, (compress=zstd)
   - Snapper is configured on the 'root' config with timeline snapshots +
     snap-pac pre/post pacman snapshots. There is no bootloader integration --
     restore a snapshot with 'snapper rollback' from a booted system or live ISO.
