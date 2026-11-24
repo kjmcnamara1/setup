@@ -1,8 +1,0 @@
-[bootstrap.packages]
-  fish = "latest"
-
-[bootstrap.mise_shell_activate]
-  fish = "auto"
-
-[bootstrap.user]
-  login_shell = "fish"

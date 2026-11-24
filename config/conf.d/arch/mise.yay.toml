@@ -1,3 +1,0 @@
-[bootstrap.hooks.pre-packages]
-  description = "Install yay (AUR helper) if missing"
-  run         = "bash {{ config_root }}/install-yay.sh"

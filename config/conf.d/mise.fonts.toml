@@ -1,4 +1,0 @@
-[bootstrap.packages]
-  ttf-jetbrains-mono-nerd  = "latest"
-  figlet                   = "latest"
-  "aur:figlet-fonts-extra" = "latest"

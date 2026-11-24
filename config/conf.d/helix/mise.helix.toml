@@ -1,5 +1,0 @@
-[bootstrap.packages]
-  helix = "latest"
-
-[dotfiles]
-  "~/.config/helix" = { mode = "track" }

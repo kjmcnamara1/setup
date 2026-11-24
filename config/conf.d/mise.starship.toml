@@ -1,5 +1,0 @@
-[bootstrap.packages]
-  starship = "latest"
-
-[dotfiles]
-  "~/.config/starship.toml" = { mode = "track" }
