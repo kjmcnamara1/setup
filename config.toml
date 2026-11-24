@@ -96,7 +96,6 @@
   # [dotfiles]
   #   "~/.config/starship.toml"     = { mode = "track" }
   #   "~/.config/user-dirs.dirs"    = { mode = "track" }
-  #   "~/.config/wezterm"           = { mode = "track" }
   #   "~/.config/yt-dlp"            = { mode = "track" }
 
   # 11. mise-shell-activate

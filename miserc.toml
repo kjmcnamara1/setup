@@ -2,6 +2,6 @@ auto_env   = true
 env_conf_d = true
 
 [env_sets]
-  angel   = ["yay", "arch", "helix", "agents", "starship", "ssh"]
-  arch-vm = ["yay", "bash", "helix", "ssh", "starship"]
+  angel   = ["yay", "arch", "helix", "agents", "starship", "ssh", "wezterm"]
+  arch-vm = ["yay", "bash", "helix", "ssh", "starship", "fonts"]
   bee     = ["yay", "htpc", "mdns", "nas", "bash", "helix"]

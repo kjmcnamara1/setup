@@ -22,7 +22,7 @@ mise -E arch run arch-install
 
 ```sh
 # Global config
-mise bootstrap --adopt kjmcnamara1/setup -E <hostname> --save-env
+mise bootstrap --adopt kjmcnamara1/setup -E <hostname> --save-env --yes
 # Tracked files history
 mise bootstrap --adopt 'kjmcnamara1/setup?ref=history' --replace-history --yes
 ```

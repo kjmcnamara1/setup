@@ -21,6 +21,10 @@ Session=plasma-bigscreen-wayland.desktop
 Relogin=true
 '''
 
+[bootstrap.services.sddm]
+  state   = "running"
+  enabled = true
+
 [bootstrap.packages]
   sddm                    = "latest"
   plasma-bigscreen        = "latest"
@@ -33,6 +37,41 @@ Relogin=true
   "aur:localsend-bin"     = "latest"
   "aur:vacuumtube-bin"    = "latest"
 
-[bootstrap.services.sddm]
-  state   = "running"
-  enabled = true
+  # graphics (Intel) — Vulkan for the standalone emulators, lib32 for Steam
+  mesa               = "latest"
+  vulkan-intel       = "latest"
+  intel-media-driver = "latest"
+  lib32-mesa         = "latest"
+  lib32-vulkan-intel = "latest"
+
+  # front-end + RetroArch (cores: Batocera defaults where packaged)
+  "aur:emulationstation-de" = "latest"
+  retroarch                 = "latest"
+  retroarch-assets-xmb      = "latest"
+  libretro-core-info        = "latest"
+  libretro-nestopia         = "latest"
+  libretro-snes9x           = "latest"
+  libretro-gambatte         = "latest"
+  libretro-mgba             = "latest"
+  libretro-genesis-plus-gx  = "latest"
+  libretro-mupen64plus-next = "latest"
+  libretro-beetle-psx-hw    = "latest"
+  libretro-melonds          = "latest"
+
+  # standalone emulators (heavy ones are best-effort on Intel graphics)
+  ppsspp                 = "latest"
+  dolphin-emu            = "latest"
+  "aur:pcsx2-latest-bin" = "latest"
+  "aur:cemu-bin"         = "latest"
+  "aur:rpcs3-bin"        = "latest"
+  "aur:ryujinx-bin"      = "latest"
+  "aur:azahar"           = "latest"
+  "aur:xemu-bin"         = "latest"
+  "aur:shadps4-bin"      = "latest"
+  "aur:xenia-canary-bin" = "latest"
+  steam                  = "latest"
+
+  # sync / mirror / backup tooling
+  nextcloud-client = "latest"
+  rsync            = "latest"
+  unzip            = "latest"
