@@ -12,54 +12,11 @@
       "autosave": true,
       "encrypt": false,
       "variants": []
-    },
-    {
-      "path": "home/.config/wezterm",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
-    },
-    {
-      "path": "home/.ssh/aur",
-      "autosave": true,
-      "encrypt": true,
-      "variants": []
-    },
-    {
-      "path": "home/.ssh/aur.pub",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
-    },
-    {
-      "path": "home/.ssh/config",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
-    },
-    {
-      "path": "home/.ssh/github",
-      "autosave": true,
-      "encrypt": true,
-      "variants": []
-    },
-    {
-      "path": "home/.ssh/github.pub",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
     }
   ],
   "exclude": [
     "~/.config/mise/age.txt"
   ],
-  "recipients": [
-    "age1nmc0de6853qllzvvcg665eeg2fckmppuq80p00nwyx808s6pv5kqkwwm0d"
-  ],
-  "permissions": {
-    "home/.ssh": 448,
-    "home/.ssh/aur": 384,
-    "home/.ssh/config": 384,
-    "home/.ssh/github": 384
-  }
+  "recipients": [],
+  "permissions": {}
 }
