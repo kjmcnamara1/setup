@@ -11,7 +11,7 @@
   os       = "linux"
   phase    = "pre-packages"
   template = true
-  content  = "root=UUID={{ exec(command='findmnt -no UUID /') }} rootflags=subvol=@ rw quiet splash"
+  content  = "root=UUID={{ exec(command='findmnt -no UUID /') }} zswap.enabled=0 rootflags=subvol=@ rw quiet splash"
 
 [bootstrap.files."/etc/mkinitcpio.d/linux.preset"]
   os = "linux"
@@ -34,9 +34,9 @@ fallback_options="-S autodetect"
   phase = "pre-packages"
   mode = "0755"
   content = '''
-default      arch-linux.efi
-timeout      1
-console-mode keep
+# default      arch-linux.efi
+timeout      0
+# console-mode keep
 editor       no
 '''
 
