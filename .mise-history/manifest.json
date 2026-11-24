@@ -12,38 +12,11 @@
       "autosave": true,
       "encrypt": false,
       "variants": []
-    },
-    {
-      "path": "home/.config/wezterm",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
-    },
-    {
-      "path": "home/.ssh/aur.pub",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
-    },
-    {
-      "path": "home/.ssh/config",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
-    },
-    {
-      "path": "home/.ssh/github.pub",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
     }
   ],
   "exclude": [
     "~/.config/mise/age.txt"
   ],
   "recipients": [],
-  "permissions": {
-    "home/.ssh": 448,
-    "home/.ssh/config": 384
-  }
+  "permissions": {}
 }
