@@ -42,6 +42,7 @@ editor       no
 
 [bootstrap.packages]
   plymouth                             = "latest"
+  binutils                             = "latest" # objcopy, for the UKI cmdline check
   "aur:plymouth-theme-arch-charge-big" = "latest"
 
 [bootstrap.hooks.post-packages]
@@ -63,11 +64,14 @@ if [ "$(plymouth-set-default-theme)" != "$theme" ]; then
 fi
 
 # The ESP may be mounted fmask/dmask=0077, so check it as root.
+# UKI mtimes don't track rebuilds, so compare the embedded .cmdline section instead.
+want=$(sed 's/[[:space:]]*$//' /etc/kernel/cmdline)
 for uki in /boot/EFI/Linux/arch-linux.efi /boot/EFI/Linux/arch-linux-fallback.efi; do
   if ! sudo test -f "$uki"; then
     reasons="$reasons missing:$uki"
-  elif sudo test /etc/kernel/cmdline -nt "$uki"; then
-    reasons="$reasons cmdline-newer-than:$uki"
+  else
+    have=$(sudo objcopy -O binary --only-section=.cmdline "$uki" /dev/stdout | tr -d '\0' | sed 's/[[:space:]]*$//')
+    [ "$have" = "$want" ] || reasons="$reasons cmdline-differs:$uki"
   fi
 done
 
