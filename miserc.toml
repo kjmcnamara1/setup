@@ -26,4 +26,19 @@ env_conf_d = true
     # "yazi",
     # "wezterm",
   ]
-  bee = ["yay", "bash", "starship", "helix", "htpc", "mdns", "nas", "ssh"]
+  bee = [
+    "yay",
+    "bash",
+    "boot",
+    # "ssh",
+    # "mdns",
+    # "nas",
+    "helix",
+    # "starship",
+    "fonts",
+    # "htpc",
+    # "emu",
+    # "audio",
+    # "bluetooth",
+    # "wezterm",
+  ]

@@ -1,42 +1,4 @@
-
-[bootstrap.groups.media]
-
-# NAS files are owned 1000:3000 (group-writable).
-[bootstrap.groups.nas]
-  gid = 3000
-
-[bootstrap.users.media]
-  group  = "media"
-  uid    = 1000
-  groups = ["nas"]
-
-[bootstrap.directories."/etc/sddm.conf.d"]
-
-[bootstrap.files."/etc/sddm.conf.d/autologin.conf"]
-  notify = ["sddm"]
-  content = '''
-[Autologin]
-User=media
-Session=plasma-bigscreen-wayland.desktop
-Relogin=true
-'''
-
-[bootstrap.services.sddm]
-  state   = "running"
-  enabled = true
-
 [bootstrap.packages]
-  sddm                    = "latest"
-  plasma-bigscreen        = "latest"
-  wezterm                 = "latest"
-  ttf-jetbrains-mono-nerd = "latest"
-  plezy                   = "latest"
-  imv                     = "latest"
-  mpv                     = "latest"
-  "aur:brave-origin-bin"  = "latest"
-  "aur:localsend-bin"     = "latest"
-  "aur:vacuumtube-bin"    = "latest"
-
   # graphics (Intel) — Vulkan for the standalone emulators, lib32 for Steam
   mesa               = "latest"
   vulkan-intel       = "latest"
@@ -69,9 +31,3 @@ Relogin=true
   "aur:xemu-bin"         = "latest"
   # "aur:shadps4-bin"      = "latest"
   # "aur:xenia-canary-bin" = "latest"
-  steam = "latest"
-
-  # sync / mirror / backup tooling
-  nextcloud-client = "latest"
-  rsync            = "latest"
-  unzip            = "latest"

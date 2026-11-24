@@ -34,9 +34,9 @@ fallback_options="-S autodetect"
   phase = "pre-packages"
   mode = "0755"
   content = '''
-# default      arch-linux.efi
+default      arch-linux.efi
 timeout      0
-# console-mode keep
+console-mode keep
 editor       no
 '''
 

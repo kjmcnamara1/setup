@@ -1,0 +1,85 @@
+[bootstrap.groups.media]
+
+# NAS files are owned 1000:3000 (group-writable).
+[bootstrap.groups.nas]
+  gid = 3000
+
+[bootstrap.users.media]
+  group  = "media"
+  uid    = 1000
+  groups = ["nas"]
+
+[bootstrap.directories."/etc/sddm.conf.d"]
+
+[bootstrap.files."/etc/sddm.conf.d/autologin.conf"]
+  notify = ["sddm"]
+  content = '''
+[Autologin]
+User=media
+Session=plasma-bigscreen-wayland.desktop
+Relogin=true
+'''
+
+[bootstrap.services.sddm]
+  state   = "running"
+  enabled = true
+
+[bootstrap.packages]
+  sddm                    = "latest"
+  plasma-bigscreen        = "latest"
+  wezterm                 = "latest"
+  ttf-jetbrains-mono-nerd = "latest"
+  plezy                   = "latest"
+  imv                     = "latest"
+  mpv                     = "latest"
+  "aur:brave-origin-bin"  = "latest"
+  "aur:localsend-bin"     = "latest"
+  "aur:vacuumtube-bin"    = "latest"
+
+  steam = "latest"
+
+  # sync / mirror / backup tooling
+  nextcloud-client = "latest"
+  rsync            = "latest"
+  unzip            = "latest"
+
+# ------------------------------------------------------------------ NAS, read-only
+# Emulators read big-system ROMs and the BIOS master through this mount. `soft`
+# makes a NAS drop return I/O errors instead of freezing the game and ES-DE.
+# Systemd units rather than fstab: /etc/fstab's single mise block belongs to
+# mise.nas.toml (rw /mnt/NAS, hard, automount).
+[bootstrap.directories."/mnt/nasro"]
+
+[bootstrap.files."/etc/systemd/system/mnt-nasro.mount"]
+  notify = ["mnt-nasro.automount"]
+  content = '''
+[Unit]
+Description=NAS (read-only, soft) for emulator reads
+After=network-online.target
+Wants=network-online.target
+
+[Mount]
+What=192.168.0.10:/mnt/md1
+Where=/mnt/nasro
+Type=nfs
+Options=ro,soft,timeo=10,retrans=2,_netdev
+TimeoutSec=5
+'''
+
+[bootstrap.files."/etc/systemd/system/mnt-nasro.automount"]
+  notify = ["mnt-nasro.automount"]
+  content = '''
+[Unit]
+Description=Automount NAS (read-only) on first access
+
+[Automount]
+Where=/mnt/nasro
+TimeoutIdleSec=0
+
+[Install]
+WantedBy=remote-fs.target
+'''
+
+[bootstrap.services."mnt-nasro.automount"]
+  state   = "running"
+  enabled = true
