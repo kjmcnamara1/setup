@@ -2,6 +2,8 @@
   networkmanager = "latest"
   iwd            = "latest"
 
+[bootstrap.directories."/etc/NetworkManager/conf.d"]
+
 [bootstrap.files."/etc/NetworkManager/conf.d/wifi_backend.conf"]
   notify = ["NetworkManager"]
   content = """

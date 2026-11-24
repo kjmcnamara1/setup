@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
-
 {% set mods = mise_env | default(value=[]) %}
-
 alias df='df -h'                                                                                       # Default to human readable figures
 alias du='du -h'                                                                                       # Default to human readable figures
 alias less='less -r'                                                                                   # raw control characters

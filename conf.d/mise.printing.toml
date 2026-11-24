@@ -1,11 +1,11 @@
+# depends = mdns
+
 [bootstrap.packages]
   cups                  = "latest"
   cups-filters          = "latest"
   cups-pdf              = "latest"
   cups-pk-helper        = "latest"
   libcups               = "latest"
-  avahi                 = "latest"
-  nss-mdns              = "latest"
   system-config-printer = "latest"
   sane                  = "latest"
   libksane              = "latest"
@@ -13,5 +13,3 @@
   simple-scan           = "latest"
 
 [bootstrap.services."cups.socket"]
-
-[bootstrap.services.avahi-daemon]

@@ -1,0 +1,87 @@
+[vars]
+  plymouth_theme = "arch-charge-big" # must match the AUR theme package below
+
+[bootstrap.directories]
+  "/etc/kernel"     = { phase = "pre-packages" }
+  "/boot/EFI/Linux" = { phase = "pre-packages" }
+  "/boot/loader"    = { phase = "pre-packages" }
+
+
+[bootstrap.files."/etc/kernel/cmdline"]
+  os       = "linux"
+  phase    = "pre-packages"
+  template = true
+  content  = "root=UUID={{ exec(command='findmnt -no UUID /') }} rootflags=subvol=@ rw quiet splash"
+
+[bootstrap.files."/etc/mkinitcpio.d/linux.preset"]
+  os = "linux"
+  phase = "pre-packages"
+  content = '''
+ALL_config="/etc/mkinitcpio.conf"
+ALL_kver="/boot/vmlinuz-linux"
+
+PRESETS=('default' 'fallback')
+
+default_uki="/boot/EFI/Linux/arch-linux.efi"
+default_options="--cmdline /etc/kernel/cmdline"
+
+fallback_uki="/boot/EFI/Linux/arch-linux-fallback.efi"
+fallback_options="-S autodetect"
+'''
+
+[bootstrap.files."/boot/loader/loader.conf"]
+  os = "linux"
+  phase = "pre-packages"
+  mode = "0755"
+  content = '''
+default      arch-linux.efi
+timeout      1
+console-mode keep
+editor       no
+'''
+
+[bootstrap.packages]
+  plymouth                             = "latest"
+  "aur:plymouth-theme-arch-charge-big" = "latest"
+
+[bootstrap.hooks.post-packages]
+  description = "Configure mkinitcpio, Plymouth, and systemd-boot (only when changed)"
+  run = [
+    '''
+hooks='HOOKS=(base systemd plymouth autodetect microcode modconf kms keyboard sd-vconsole block filesystems fsck)'
+theme={{ vars.plymouth_theme | quote }}
+rebuild=0
+
+if ! grep -qxF "$hooks" /etc/mkinitcpio.conf; then
+  sudo sed -i "s/^HOOKS=.*/$hooks/" /etc/mkinitcpio.conf
+  rebuild=1
+fi
+
+if [ "$(plymouth-set-default-theme)" != "$theme" ]; then
+  sudo plymouth-set-default-theme "$theme"
+  rebuild=1
+fi
+
+for uki in /boot/EFI/Linux/arch-linux.efi /boot/EFI/Linux/arch-linux-fallback.efi; do
+  [ -f "$uki" ] || rebuild=1
+done
+
+if [ "$rebuild" = 1 ]; then
+  sudo mkinitcpio -P
+fi
+''',
+    '''
+if ! sudo bootctl is-installed --esp-path=/boot >/dev/null 2>&1; then
+  sudo bash {{ config_root }}/mise-tasks/remove-boot-entries
+  sudo bootctl install --esp-path=/boot
+fi
+''',
+  ]
+
+[bootstrap.files."/boot/initramfs-linux.img"]
+  state = "absent"
+
+[bootstrap.files."/boot/initramfs-linux-fallback.img"]
+  state = "absent"
+
+[bootstrap.services.systemd-boot-update]

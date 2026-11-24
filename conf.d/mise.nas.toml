@@ -1,6 +1,8 @@
 [bootstrap.packages]
   nfs-utils = "latest"
 
+[bootstrap.directories."/mnt/NAS"]
+
 [bootstrap.files."/etc/fstab"]
   os = "linux"
   id = "nas"

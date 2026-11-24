@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
 {% set mods = mise_env | default(value=[]) %}
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
