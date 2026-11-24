@@ -67,9 +67,9 @@ Relogin=true
   "aur:ryujinx-bin"      = "latest"
   "aur:azahar"           = "latest"
   "aur:xemu-bin"         = "latest"
-  "aur:shadps4-bin"      = "latest"
-  "aur:xenia-canary-bin" = "latest"
-  steam                  = "latest"
+  # "aur:shadps4-bin"      = "latest"
+  # "aur:xenia-canary-bin" = "latest"
+  steam = "latest"
 
   # sync / mirror / backup tooling
   nextcloud-client = "latest"
