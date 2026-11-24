@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+{% set mods = mise_env | default(value=[]) %}
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# don't put duplicate lines or lines starting with space in the history.
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
+
+# Use case-insensitive filename globbing
+shopt -s nocaseglob
+
+# When changing directory small typos can be ignored by bash
+# for example, cd /vr/lgo/apaache would find /var/log/apache
+shopt -s cdspell
+
+alias df='df -h'                                                                                       # Default to human readable figures
+alias du='du -h'                                                                                       # Default to human readable figures
+alias less='less -r'                                                                                   # raw control characters
+alias whence='type -a'                                                                                 # where, of a sort
+alias grep='grep --color'                                                                              # show differences in colour
+alias py="python3"                                                                                     # Python
+alias ipy='ipython'                                                                                      # Interactive Python Shell
+alias hx='helix'                                                                                         # Helix text editor
+alias fetch='fastfetch'                                                                                  # Fastfetch terminal sysinfo viewer
+alias lg='lazygit'
+alias oc='opencode'                                                                                      # OpenCode
+alias l='eza -F --icons --links --group-directories-first --git --git-repos --smart-group --hyperlink' # horizontal grid
+alias ls='l -1'                                                                                        # single column list
+alias la='ls -A'                                                                                       # all but . and ..
+alias l.='la -d $(eza -a | grep -e "^\.")'                                                             # show only hidden files
+alias ll='la -l'                                                                                       # long list including hidden
+alias llr='ll --time-style=relative'                                                                   # long list with relative time
+alias lt='ll --tree --total-size --git-ignore'                                                         # long list and recurse into directories as tree
+alias ltt='lt --level=2'                                                                               # default tree list level 2
+alias lttt='lt --level=3'                                                                              # default tree list level 3
+alias ltttt='lt --level=4'                                                                             # default tree list level 4
+alias lttttt='lt --level=5'                                                                            # default tree list level 5
+alias dc='docker compose'
+alias cat='bat'
+alias rg='rg --smart-case'
+
+eval "$(zoxide init --cmd cd bash)" # Zoxide
+eval "$(fzf --bash)" # Set up fzf key bindings and fuzzy completion
+
+{% if "starship" in mods %}
+eval "$(starship init bash)" # Starship Prompt
+{% endif %}
+
+{% if "yazi" in mods %}
+export YAZI_CONFIG_HOME="$HOME/.config/yazi" # Yazi
+{% endif %}
+
+# for f in ~/.config/bash/*.sh; do [ -r "$f" ] && . "$f"; done

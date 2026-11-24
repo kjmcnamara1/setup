@@ -1,0 +1,8 @@
+[tools.claude]
+  version = "latest"
+  lazy    = true
+
+[tools.opencode]
+  version      = "latest"
+  lazy         = true
+  allow_builds = ["@opencode/cli"]

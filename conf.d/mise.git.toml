@@ -1,0 +1,12 @@
+[bootstrap.packages]
+  git = "latest"
+  # git-delta  = "latest"
+  # jjui-bin   = "latest"
+
+[tools]
+  github-cli = { version = "latest", lazy = true }
+  lazygit    = { version = "latest", lazy = true }
+  delta      = "latest"
+  difftastic = { version = "latest", lazy = true }
+  jujutsu    = { version = "latest", lazy = true }
+  jujutsu-ui = { version = "latest", lazy = true }

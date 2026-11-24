@@ -1,0 +1,10 @@
+[bootstrap.packages]
+  nfs-utils = "latest"
+
+[bootstrap.files."/etc/fstab"]
+  os = "linux"
+  id = "nas"
+  block = """
+# NAS
+192.168.0.10:/mnt/md1 /mnt/NAS nfs nofail,_netdev,x-systemd.automount,x-systemd.mount-timeout=5s 0 0
+"""

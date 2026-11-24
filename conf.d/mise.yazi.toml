@@ -1,0 +1,13 @@
+[bootstrap.packages]
+  mediainfo      = "latest"
+  "aur:rich-cli" = "latest"
+  ouch           = "latest"
+  wl-clipboard   = "latest"
+
+[tools]
+  yazi        = { version = "latest", lazy = true }
+  ffmpeg      = { version = "latest", lazy = true }
+  poppler     = { version = "latest", lazy = true }
+  resvg       = { version = "latest", lazy = true }
+  imagemagick = { version = "latest", lazy = true }
+  7zip        = { version = "latest", lazy = true }

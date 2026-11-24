@@ -1,0 +1,6 @@
+[bootstrap.packages]
+  bottom       = "latest"
+  rocm-smi-lib = "latest"
+
+[dotfiles]
+  "~/.config/bottom/bottom.toml" = { mode = "track" }

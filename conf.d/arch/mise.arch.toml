@@ -1,0 +1,30 @@
+[bootstrap.packages]
+  base-devel     = "latest"
+  pacman-contrib = "latest"
+  btrfs-progs    = "latest"
+  plymouth       = "latest" # boot module? plymouth,uki,systemd-boot,efibootmgr,snapper
+  snapper        = "latest"
+  snap-pac       = "latest"
+  ntfs-3g        = "latest"
+  reflector      = "latest" # reflector module? with /etc/xdg/reflector/reflector.conf
+  zram-generator = "latest"
+  efibootmgr     = "latest"
+  sudo           = "latest"
+  dosfstools     = "latest"
+  mtools         = "latest"
+  udiskie        = "latest"
+  wl-clipboard   = "latest"
+
+  # chaotic AUR?
+
+[bootstrap.linux.systemd.units.udiskie]
+  description = "Auto mount USB devices"
+  # documentation = "man:udiskie(8)"
+  after       = ["graphical-session.target"]
+  type        = "simple"
+  exec_start  = "/usr/bin/udiskie"
+  restart     = "always"
+  restart_sec = "2"
+
+  # [bootstrap.services.udiskie]
+  #   scope = "user"

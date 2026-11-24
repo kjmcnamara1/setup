@@ -1,0 +1,15 @@
+[bootstrap.packages]
+  neovim   = "latest"
+  helix    = "latest"
+  luarocks = "latest"
+  # tree-sitter-cli = "latest"
+  # nodejs          = "latest"
+  # npm             = "latest"
+
+[bootstrap.repos."~/.config/nvim"]
+  url = "https://github.com/kjmcnamara1/nvim"
+
+[tools]
+  tree-sitter = { version = "latest", lazy = true }
+  node        = { version = "latest", lazy = true }
+  # shellcheck  = { version = "latest", lazy = true }

@@ -1,0 +1,5 @@
+[bootstrap.packages]
+  ghostty   = "latest"
+  kitty     = "latest"
+  wezterm   = "latest"
+  alacritty = "latest"
