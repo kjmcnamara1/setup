@@ -1,10 +1,14 @@
-[settings.history]
-  fetch_interval   = "30s"
-  sync_interval    = "30s"
-  describe_command = "claude -p --output-format text --no-session-persistence 'Describe this change to my configuration files in one line of at most 120 characters, plain text, no quotes.'"
+[settings]
+  experimental = true
+
+  [settings.history]
+    fetch_interval   = "30s"
+    sync_interval    = "30s"
+    describe_command = "claude -p --output-format text --no-session-persistence 'Describe this change to my configuration files in one line of at most 120 characters, plain text, no quotes.'"
 
 [history]
   git_email = "mise@{hostname}"
+  exclude   = ["~/.config/mise/age.txt"]
 
   # https://mise.jdx.dev/bootstrap.html#how-it-runs
 
@@ -40,6 +44,7 @@
   git       = "latest"
   wget      = "latest"
   curl      = "latest"
+  age       = "latest"
   neovim    = "latest"
   openssh   = "latest"
   bat       = "latest"
@@ -61,6 +66,11 @@
   # asciinema      = "latest"
   # asciinema-edit = "latest"
   # asciinema-agg  = "latest"
+
+[bootstrap.hooks.post-packages]
+  description = "Decrypt Private Age Key"
+  run         = "bash {{ config_root }}/decrypt-age-key.sh"
+  # run_windows=""
 
   # 5. files phase = "post-packages"
 
