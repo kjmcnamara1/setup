@@ -74,7 +74,7 @@
 
 [bootstrap.hooks.pre-packages]
   description = "Decrypt private age key"
-  run         = "bash {{ config_root }}/decrypt-age-key.sh"
+  run         = "bash {{ mise_config_dir }}/decrypt-age-key.sh"
   run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File {{ mise_config_dir }}\\decrypt-age-key.ps1"
 
   # 5. files phase = "post-packages"
