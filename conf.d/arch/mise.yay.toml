@@ -24,4 +24,4 @@ Include = /etc/pacman.d/mirrorlist
 
 [bootstrap.hooks.pre-packages]
   description = "Install yay (AUR helper) if missing"
-  run         = "bash {{ config_root }}/mise-tasks/yay-install"
+  run         = ["sudo pacman -Sy", "bash {{ config_root }}/mise-tasks/yay-install"]
