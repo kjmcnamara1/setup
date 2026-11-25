@@ -8,5 +8,5 @@ default_provider = "age"
   key_file = "~/.config/mise/age.txt"
 
 [files]
-  "~/.ssh/aur" = { provider = "age", source = "ssh/aur.age" }
-  "~/.ssh/gh"  = { provider = "age", source = "ssh/github.age" }
+  "~/.ssh/aur"    = { provider = "age", source = "ssh/aur.age" }
+  "~/.ssh/github" = { provider = "age", source = "ssh/github.age" }

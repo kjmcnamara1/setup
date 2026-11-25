@@ -3,7 +3,7 @@
 
 [dotfiles]
   "~/.ssh/aur"        = { mode = "fnox", depends = ["~/.config/fnox"] }
-  "~/.ssh/gh"         = { mode = "fnox", depends = ["~/.config/fnox"] }
+  "~/.ssh/github"     = { mode = "fnox", depends = ["~/.config/fnox"] }
   "~/.ssh/config"     = "files/config"
   "~/.ssh/aur.pub"    = "files/aur.pub"
   "~/.ssh/github.pub" = "files/github.pub"
