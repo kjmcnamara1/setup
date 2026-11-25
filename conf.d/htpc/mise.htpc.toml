@@ -53,6 +53,26 @@ Relogin=true
   rsync            = "latest"
   unzip            = "latest"
 
+[dotfiles."~/.config/plasmaparc"]
+  content = '''
+[General]
+AudioFeedback=false
+'''
+
+[dotfiles."~/.config/wireplumber/wireplumber.conf.d/51-htpc-hdmi.conf"]
+  content = '''
+monitor.alsa.rules = [
+  {
+    matches = [ { device.name = "alsa_card.pci-0000_00_1f.3" } ]
+    actions = { update-props = { device.profile = "output:hdmi-stereo+input:analog-stereo" } }
+  }
+  {
+    matches = [ { node.name = "alsa_output.pci-0000_00_1f.3.hdmi-stereo" } ]
+    actions = { update-props {  priority.session = 2000, priority.driver = 2000 } }
+  }
+]
+'''
+
   # ------------------------------------------------------------------ NAS, read-only
   # Emulators read big-system ROMs and the BIOS master through this mount. `soft`
   # makes a NAS drop return I/O errors instead of freezing the game and ES-DE.
