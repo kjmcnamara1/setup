@@ -50,12 +50,13 @@ Relogin=true
   rsync            = "latest"
   unzip            = "latest"
 
-# ------------------------------------------------------------------ NAS, read-only
-# Emulators read big-system ROMs and the BIOS master through this mount. `soft`
-# makes a NAS drop return I/O errors instead of freezing the game and ES-DE.
-# Systemd units rather than fstab: /etc/fstab's single mise block belongs to
-# mise.nas.toml (rw /mnt/NAS, hard, automount).
-[bootstrap.directories."/mnt/nasro"]
+  # ------------------------------------------------------------------ NAS, read-only
+  # Emulators read big-system ROMs and the BIOS master through this mount. `soft`
+  # makes a NAS drop return I/O errors instead of freezing the game and ES-DE.
+  # Systemd units rather than fstab: /etc/fstab's single mise block belongs to
+  # mise.nas.toml (rw /mnt/NAS, hard, automount).
+
+  # bootstrap.directories not needed for /mnt/nasro
 
 [bootstrap.files."/etc/systemd/system/mnt-nasro.mount"]
   notify = ["mnt-nasro.automount"]
