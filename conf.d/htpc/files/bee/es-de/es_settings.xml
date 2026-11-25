@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<!-- bee: seeded once by mise (create_if_missing); ES-DE owns this file afterwards. -->
+<string name="ROMDirectory" value="~/Games/roms" />
+<string name="MediaDirectory" value="/mnt/NAS/media/library/es-de/downloaded_media" />

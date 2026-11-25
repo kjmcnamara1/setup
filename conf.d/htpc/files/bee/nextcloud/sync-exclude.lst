@@ -1,0 +1,38 @@
+# Never sync caches, logs, or huge churny data from bee's games folder.
+# (Excluded items still live locally in ~/Nextcloud/Games/bee; they just don't upload.)
+*.log
+*.qcow2
+*~
+.~lock.*
+Cache
+cache
+ShaderCache
+shadercache
+Shaders
+shaders
+Logs
+logs
+log
+# RPCS3 (configs/rpcs3): firmware is reinstalled from bios/ps3; captures/states are bulky
+configs/rpcs3/dev_flash
+configs/rpcs3/dev_flash2
+configs/rpcs3/dev_flash3
+configs/rpcs3/dev_hdd0
+configs/rpcs3/dev_hdd1
+configs/rpcs3/dev_bdvd
+configs/rpcs3/dev_usb000
+configs/rpcs3/captures
+configs/rpcs3/recordings
+configs/rpcs3/savestates
+configs/rpcs3/games
+configs/rpcs3/Icons
+# Ryujinx (configs/ryujinx): per-game shader caches
+configs/ryujinx/games
+configs/ryujinx/bis.bak
+# RetroArch (configs/retroarch): binaries and downloadable content
+configs/retroarch/cores
+configs/retroarch/assets
+configs/retroarch/shaders
+configs/retroarch/thumbnails
+configs/retroarch/logs
+configs/retroarch/system
