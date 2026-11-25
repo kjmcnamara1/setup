@@ -1,0 +1,5 @@
+[bootstrap.packages]
+  "aur:fnox-bin" = "latest"
+
+[dotfiles]
+  "~/.config/fnox" = "files"

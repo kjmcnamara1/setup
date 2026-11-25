@@ -1,0 +1,12 @@
+default_provider = "age"
+
+[providers.age]
+  type = "age"
+  recipients = [
+    "age1nmc0de6853qllzvvcg665eeg2fckmppuq80p00nwyx808s6pv5kqkwwm0d",
+  ]
+  key_file = "~/.config/mise/age.txt"
+
+[files]
+  "~/.ssh/aur" = { provider = "age", source = "ssh/aur.age" }
+  "~/.ssh/gh"  = { provider = "age", source = "ssh/github.age" }
