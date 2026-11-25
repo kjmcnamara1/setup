@@ -1,0 +1,76 @@
+# yazi.toml
+[mgr]
+  show_hidden = true
+  linemode    = "size"
+
+[tasks]
+  image_bound = [0, 0]
+  image_alloc = 1073741824 # = 1024*1024*1024 = 1024MB
+
+[opener]
+  # extract = [
+  #   { run = 'ouch d -y %*', desc = "Extract here with ouch", for = "windows" },
+  #   { run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
+  # ]
+
+  # edit = [
+  #   { run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
+  #   { run = '%EDITOR% %*', desc = "$EDITOR", block = true, for = "windows" },
+  #   { run = 'code "$@"', desc = "VS Code", orphan = true, for = "unix" },
+  #   { run = 'code %*', desc = "VS Code", orphan = true, for = "windows" },
+  #   { run = 'code -w %*', desc = "VS Code (block)", block = true, for = "windows" },
+  # ]
+
+  # mount = [
+  #   { run = 'udisksctl loop-setup -r -f "$1"', desc = "Mount ISO", block = true, for = "unix" },
+  # ]
+
+  # [[open.prepend_rules]]
+  #   url = "*.iso"
+  #   use = "mount"
+
+[[open.prepend_rules]]
+  url = "*.zip"
+  use = ["extract", "reveal"]
+
+# Replace magick, image, video with mediainfo
+[[plugin.prepend_preloaders]]
+  mime = "{audio,video,image}/*"
+  run  = "mediainfo"
+
+[[plugin.prepend_previewers]]
+  mime = "{audio,video,image}/*"
+  run  = "mediainfo"
+
+[[plugin.prepend_preloaders]]
+  mime = "application/{subrip,postscript,illustrator,eps}"
+  run  = "mediainfo"
+
+[[plugin.prepend_previewers]]
+  mime = "application/{subrip,postscript,illustrator,eps}"
+  run  = "mediainfo"
+
+[[plugin.prepend_previewers]]
+  url = "*.{csv,md,rst,py,ipynb}"
+  run = 'faster-piper -- rich --force-terminal --guides --max-width $w --theme nord "$1"'
+
+[[plugin.prepend_previewers]]
+  mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}"
+  url  = "*.zip"
+  run  = "ouch --show-file-icons"
+
+[[plugin.prepend_previewers]]
+  mime = "application/sqlite3"
+  run  = 'faster-piper -- sqlite3 "$1" ".schema --indent"'
+
+[[plugin.prepend_fetchers]]
+  id    = "git"
+  url   = "*"
+  run   = "git"
+  group = "git"
+
+[[plugin.prepend_fetchers]]
+  id    = "git"
+  url   = "*/"
+  run   = "git"
+  group = "git"

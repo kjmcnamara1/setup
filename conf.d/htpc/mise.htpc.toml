@@ -9,6 +9,9 @@
   uid    = 1000
   groups = ["nas"]
 
+# TODO: find a way to sync wallpapers from ~/Nextcloud/Pictures/walls/
+[bootstrap.directories."/usr/share/wallpapers"]
+
 [bootstrap.directories."/etc/sddm.conf.d"]
 
 [bootstrap.files."/etc/sddm.conf.d/autologin.conf"]

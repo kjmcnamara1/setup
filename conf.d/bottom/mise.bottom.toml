@@ -3,4 +3,4 @@
   rocm-smi-lib = "latest"
 
 [dotfiles]
-  "~/.config/bottom/bottom.toml" = { mode = "track" }
+  "~/.config/bottom" = "files"

@@ -1,5 +1,0 @@
-[bootstrap.packages]
-  wezterm = "latest"
-
-[dotfiles]
-  "~/.config/wezterm" = { mode = "track" }

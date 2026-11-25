@@ -1,0 +1,9 @@
+[bootstrap.packages]
+  wezterm = "latest"
+
+[bootstrap.hooks.post-packages]
+  description = 'Add wezterm context menu support'
+  run_windows = 'reg import "C:\Users\kjmcn\scoop\apps\wezterm\current\install-context.reg"'
+
+[dotfiles]
+  "~/.config/wezterm" = "files"

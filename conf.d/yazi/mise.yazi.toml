@@ -4,6 +4,13 @@
   ouch           = "latest"
   wl-clipboard   = "latest"
 
+[dotfile_groups.yazi]
+  root   = "~/.config/mise/conf.d/yazi/files"
+  target = "~/.config/yazi"
+
+  [dotfile_groups.yazi.entries]
+    "~/.config/yazi/package.toml" = { mode = "copy", create_if_missing = true }
+
 [tools]
   yazi        = { version = "latest", lazy = true }
   ffmpeg      = { version = "latest", lazy = true }
@@ -11,3 +18,7 @@
   resvg       = { version = "latest", lazy = true }
   imagemagick = { version = "latest", lazy = true }
   7zip        = { version = "latest", lazy = true }
+
+[tasks.bootstrap]
+  description = "Upgrade yazi plugins and flavors"
+  run         = " ya pkg upgrade &> /dev/null || exit 1"

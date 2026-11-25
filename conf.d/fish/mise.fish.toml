@@ -1,6 +1,9 @@
 [bootstrap.packages]
   fish = "latest"
 
+[dotfiles]
+  "~/.config/fish" = "files"
+
 [bootstrap.mise_shell_activate]
   fish = "auto"
 

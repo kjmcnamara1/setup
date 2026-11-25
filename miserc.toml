@@ -2,7 +2,16 @@ auto_env   = true
 env_conf_d = true
 
 [env_sets]
-  angel = ["yay", "arch", "helix", "agents", "starship", "ssh", "wezterm"]
+  angel = [
+    "yay",
+    "arch",
+    "helix",
+    "agents",
+    "starship",
+    "ssh",
+    "wezterm",
+    "yazi",
+  ]
   arch-vm = [
     # "keyboard",
     "yay",

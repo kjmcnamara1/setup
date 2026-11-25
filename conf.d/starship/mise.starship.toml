@@ -2,4 +2,4 @@
   starship = "latest"
 
 [dotfiles]
-  "~/.config/starship.toml" = { mode = "track" }
+  "~/.config/starship.toml" = "files/starship.toml"

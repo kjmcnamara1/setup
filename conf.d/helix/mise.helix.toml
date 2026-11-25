@@ -2,7 +2,7 @@
   helix = "latest"
 
 [dotfiles]
-  "~/.config/helix" = { mode = "track" }
+  "~/.config/helix" = "files"
 
 [shell_alias]
   hx = "helix"
