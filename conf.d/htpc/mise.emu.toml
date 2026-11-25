@@ -31,3 +31,247 @@
   "aur:xemu-bin"         = "latest"
   # "aur:shadps4-bin"      = "latest"
   # "aur:xenia-canary-bin" = "latest"
+
+# ------------------------------------------------------------------ Nextcloud sync
+# Saves + emulator configs live in ~/Nextcloud/Games/bee, synced with Nextcloud
+# /Games/bee every 5 min by nextcloudcmd (headless). Supply the credentials with
+# `mise bootstrap --prompt-secrets` (or export the env vars).
+[bootstrap.secrets.nextcloud_user]
+  env         = "NEXTCLOUD_USER"
+  description = "Nextcloud login name for http://192.168.0.10:8096"
+
+[bootstrap.secrets.nextcloud_app_password]
+  env         = "NEXTCLOUD_APP_PASSWORD"
+  description = "Nextcloud app password for bee (Settings → Security → App passwords)"
+
+[bootstrap.files."~/.netrc"]
+  template = true
+  mode = "0600"
+  content = '''
+machine 192.168.0.10 login {{ secret(name="nextcloud_user") }} password {{ secret(name="nextcloud_app_password") }}
+'''
+
+[bootstrap.linux.systemd.units.bee-nextcloud-sync]
+  description = "Sync ~/Nextcloud/Games/bee with Nextcloud"
+  type        = "oneshot"
+  exec_start  = "/bin/bash %h/.config/mise/files/bee/bin/bee-nextcloud-sync.sh --init"
+  start       = false
+  wanted_by   = []
+
+[bootstrap.linux.systemd.units.bee-nextcloud-sync-timer]
+  description          = "Sync bee's games folder with Nextcloud every 5 minutes"
+  on_boot_sec          = "1min"
+  on_unit_inactive_sec = "5min"
+  unit                 = "bee-nextcloud-sync"
+
+# Before [dotfiles] makes symlinks into the synced folder: create its skeleton,
+# pull what Nextcloud has, then seed anything still missing from the NAS.
+[bootstrap.hooks.pre-dotfiles]
+  description = "bee: sync games folder from Nextcloud and seed missing configs"
+  run = [
+    "bash {{ xdg_config_home }}/mise/files/bee/bin/bee-nextcloud-sync.sh --init",
+    "bash {{ xdg_config_home }}/mise/files/bee/bin/bee-seed.sh",
+  ]
+
+# ------------------------------------------------------------------ local ROM/BIOS mirror
+# Systems copied NAS -> ~/Games/roms (work offline). Everything else is read from
+# /mnt/nasro. Moving a system between tiers = edit this one string (space-separated;
+# mise [vars] cannot be arrays). Also drives es_systems.xml paths.
+[vars]
+  bee_local_systems = "nes snes gbc gba megadrive n64 nds psx psp steam"
+
+# bee-mirror-roms.sh reads the list from this file (rendered from the var above).
+[dotfiles."~/.config/bee/local-systems"]
+  source = "../files/bee/local-systems.tera"
+  mode   = "template"
+
+[bootstrap.linux.systemd.units.bee-mirror-roms]
+  description = "Mirror small-system ROMs and BIOS from the NAS to ~/Games"
+  type        = "oneshot"
+  exec_start  = "/bin/bash %h/.config/mise/files/bee/bin/bee-mirror-roms.sh"
+  nice        = 10
+  start       = false
+  wanted_by   = []
+
+[bootstrap.linux.systemd.units.bee-mirror-roms-timer]
+  description          = "Mirror ROMs from the NAS hourly"
+  on_boot_sec          = "2min"
+  on_unit_inactive_sec = "1h"
+  unit                 = "bee-mirror-roms"
+
+# ------------------------------------------------------------------ ES-DE
+# System list is ours (rendered; edit files/bee/es-de/es_systems.xml.tera).
+# gamelists/collections/settings live in the synced folder; es_settings.xml is
+# seeded once and then owned by ES-DE. ES-DE's packaged .desktop entry is the
+# Bigscreen tile (no autostart).
+[dotfiles."~/ES-DE/custom_systems/es_systems.xml"]
+  source = "../files/bee/es-de/es_systems.xml.tera"
+  mode   = "template"
+
+[dotfiles."~/ES-DE/gamelists"]
+  source = "~/Nextcloud/Games/bee/configs/es-de/gamelists"
+  mode   = "symlink"
+
+[dotfiles."~/ES-DE/collections"]
+  source = "~/Nextcloud/Games/bee/configs/es-de/collections"
+  mode   = "symlink"
+
+[dotfiles."~/ES-DE/settings"]
+  source = "~/Nextcloud/Games/bee/configs/es-de/settings"
+  mode   = "symlink"
+
+[dotfiles."~/Nextcloud/Games/bee/configs/es-de/settings/es_settings.xml"]
+  source            = "../files/bee/es-de/es_settings.xml"
+  mode              = "copy"
+  create_if_missing = true
+
+# ------------------------------------------------------------------ post-dotfiles
+[bootstrap.hooks.post-dotfiles]
+  description = "bee: link RPCS3 installed content on the NAS; install Batocera's NES/PSX cores if available"
+  run = [
+    "d=~/.local/share/rpcs3/dev_hdd0; mkdir -p $d; [ -L $d/game ] || rmdir $d/game 2>/dev/null || true; if [ -e $d/game ] && [ ! -L $d/game ]; then echo \"bee: $d/game is a non-empty real dir; not replacing it\" >&2; else ln -sfn /mnt/NAS/media/library/emulators/configs/rpcs3/dev_hdd0/game $d/game; fi",
+    "bash {{ xdg_config_home }}/mise/files/bee/bin/bee-fetch-cores.sh",
+  ]
+
+  # ------------------------------------------------------------------ emulators
+  # Pattern: link config/save *directories* into the synced folder (never single
+  # files: emulators save by atomic rename), keep caches local, and enforce only
+  # path keys with `merge = true`. Merges target the resolved path in the synced
+  # folder (mise rejects entries nested under a symlinked entry). Merge sources in
+  # files/bee/merge/ hard-code /home/media.
+
+# RetroArch — config, remaps, core options, playlists synced; cores (incl. the
+# fetched Batocera ones), shaders, assets, thumbnails, logs excluded from sync.
+# Per-system save/BIOS dirs and the exit hotkey come from bee-ra.sh's appendconfig.
+[dotfiles."~/.config/retroarch"]
+  source = "~/Nextcloud/Games/bee/configs/retroarch"
+  mode   = "symlink"
+
+# PPSSPP — memstick is ~/.config/ppsspp
+[dotfiles."~/.config/ppsspp/PSP/SAVEDATA"]
+  source = "~/Nextcloud/Games/bee/saves/psp/PSP/SAVEDATA"
+  mode   = "symlink"
+
+[dotfiles."~/.config/ppsspp/PSP/PPSSPP_STATE"]
+  source = "~/Nextcloud/Games/bee/saves/psp/PSP/PPSSPP_STATE"
+  mode   = "symlink"
+
+[dotfiles."~/.config/ppsspp/PSP/SYSTEM"]
+  source = "~/Nextcloud/Games/bee/configs/ppsspp/SYSTEM"
+  mode   = "symlink"
+
+# PCSX2 — Batocera memory cards are Mcd001.ps2/Mcd002.ps2 (PCSX2 defaults)
+[dotfiles."~/.config/PCSX2/inis"]
+  source = "~/Nextcloud/Games/bee/configs/pcsx2/inis"
+  mode   = "symlink"
+
+[dotfiles."~/Nextcloud/Games/bee/configs/pcsx2/inis/PCSX2.ini/paths"]
+  source = "../files/bee/merge/pcsx2.ini"
+  merge  = true
+
+# Dolphin — config dir synced; GC memory cards, Wii NAND saves, states synced;
+# Cache/Shaders stay local in ~/.local/share/dolphin-emu.
+[dotfiles."~/.config/dolphin-emu"]
+  source = "~/Nextcloud/Games/bee/configs/dolphin-emu"
+  mode   = "symlink"
+
+[dotfiles."~/.local/share/dolphin-emu/GC"]
+  source = "~/Nextcloud/Games/bee/saves/dolphin-emu/GC"
+  mode   = "symlink"
+
+[dotfiles."~/.local/share/dolphin-emu/Wii"]
+  source = "~/Nextcloud/Games/bee/saves/dolphin-emu/Wii"
+  mode   = "symlink"
+
+[dotfiles."~/.local/share/dolphin-emu/StateSaves"]
+  source = "~/Nextcloud/Games/bee/saves/dolphin-emu/StateSaves"
+  mode   = "symlink"
+
+# Cemu — config dir synced; mlc01 (saves, installed updates/DLC) is the
+# Batocera wiiu saves folder; keys.txt seeded from the NAS; shader cache in ~/.cache.
+[dotfiles."~/.config/Cemu"]
+  source = "~/Nextcloud/Games/bee/configs/cemu"
+  mode   = "symlink"
+
+[dotfiles."~/.local/share/Cemu/mlc01"]
+  source = "~/Nextcloud/Games/bee/saves/wiiu"
+  mode   = "symlink"
+
+# RPCS3 — config dir synced (firmware, captures, savestates excluded from sync by
+# files/bee/nextcloud/sync-exclude.lst); dev_hdd0 is local, with installed
+# content on the NAS (rw mount; linked by the post-dotfiles hook so a down NAS
+# can't fail the dotfiles step) and PS3 saves (home/) synced. Shader cache in ~/.cache.
+# Firmware: install once from ~/Games/bios/ps3/PS3UPDAT.PUP (File → Install Firmware).
+[dotfiles."~/.config/rpcs3"]
+  source = "~/Nextcloud/Games/bee/configs/rpcs3"
+  mode   = "symlink"
+
+[dotfiles."~/Nextcloud/Games/bee/configs/rpcs3/config/vfs.yml/paths"]
+  source = "../files/bee/merge/rpcs3-vfs.yml"
+  merge  = true
+
+[dotfiles."~/.local/share/rpcs3/dev_hdd0/home"]
+  source = "~/Nextcloud/Games/bee/saves/ps3/home"
+  mode   = "symlink"
+
+# Ryujinx — whole dir synced (Switch saves live in bis/); shader cache (games/)
+# and Logs excluded from sync. Firmware/keys come with the seeded system/ + bis/.
+[dotfiles."~/.config/Ryujinx"]
+  source = "~/Nextcloud/Games/bee/configs/ryujinx"
+  mode   = "symlink"
+
+[dotfiles."~/Nextcloud/Games/bee/configs/ryujinx/Config.json/paths"]
+  source = "../files/bee/merge/ryujinx.json"
+  merge  = true
+
+# Azahar (3DS) — Batocera kept Citra data under saves/3ds/citra-emu.
+[dotfiles."~/.config/azahar-emu"]
+  source = "~/Nextcloud/Games/bee/configs/azahar"
+  mode   = "symlink"
+
+[dotfiles."~/.local/share/azahar-emu/sdmc"]
+  source = "~/Nextcloud/Games/bee/saves/3ds/citra-emu/sdmc"
+  mode   = "symlink"
+
+[dotfiles."~/.local/share/azahar-emu/nand"]
+  source = "~/Nextcloud/Games/bee/saves/3ds/citra-emu/nand"
+  mode   = "symlink"
+
+# xemu — config synced; the HDD image (holds the saves) and EEPROM stay local
+# (seeded from the NAS; backed up daily by bee-nas-backup).
+[dotfiles."~/.local/share/xemu/xemu"]
+  source = "~/Nextcloud/Games/bee/configs/xemu"
+  mode   = "symlink"
+
+[dotfiles."~/Nextcloud/Games/bee/configs/xemu/xemu.toml/paths"]
+  source = "../files/bee/merge/xemu.toml"
+  merge  = true
+
+# shadPS4 — save data synced. Note: the NAS ps4 ROMs are .pkg files, which must be
+# installed in shadPS4 before ES-DE can launch them.
+[dotfiles."~/.local/share/shadPS4/user/savedata"]
+  source = "~/Nextcloud/Games/bee/saves/ps4"
+  mode   = "symlink"
+
+# Xenia Canary — content (saves/profiles, by title ID) is Batocera's xbox360 folder.
+[dotfiles."~/.local/share/Xenia/content"]
+  source = "~/Nextcloud/Games/bee/saves/xbox360"
+  mode   = "symlink"
+
+# ------------------------------------------------------------------ NAS backups
+# Daily hard-linked snapshot of ~/Nextcloud/Games/bee + the xemu HDD image to
+# /mnt/NAS/media/library/backups/bee/snapshots/<date> (keeps 30; `latest` link).
+[bootstrap.linux.systemd.units.bee-nas-backup]
+  description       = "Snapshot bee's game setup and saves to the NAS"
+  type              = "oneshot"
+  exec_start        = "/bin/bash %h/.config/mise/files/bee/bin/bee-nas-backup.sh"
+  timeout_start_sec = "6h"
+  nice              = 10
+  start             = false
+  wanted_by         = []
+
+[bootstrap.linux.systemd.units.bee-nas-backup-timer]
+  description = "Snapshot bee's game setup to the NAS daily"
+  on_calendar = "daily"
+  persistent  = true
+  unit        = "bee-nas-backup"
