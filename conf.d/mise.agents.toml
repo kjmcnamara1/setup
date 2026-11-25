@@ -6,3 +6,6 @@
   version      = "latest"
   lazy         = true
   allow_builds = ["@opencode/cli"]
+
+[shell_alias]
+  oc = "opencode"

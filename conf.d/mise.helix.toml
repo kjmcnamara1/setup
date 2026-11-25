@@ -3,3 +3,6 @@
 
 [dotfiles]
   "~/.config/helix" = { mode = "track" }
+
+[shell_alias]
+  hx = "helix"
