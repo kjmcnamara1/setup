@@ -11,6 +11,8 @@
 
 # TODO: find a way to sync wallpapers from ~/Nextcloud/Pictures/walls/
 [bootstrap.directories."/usr/share/wallpapers"]
+[bootstrap.directories."/usr/share/wallpapers/Next"]
+  state = "absent"
 
 [bootstrap.hooks.final]
   description = "Plasma bigscreen wallpapers"
