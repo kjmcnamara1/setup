@@ -1,0 +1,7 @@
+[bootstrap.packages]
+  tailscale = "latest"
+
+[bootstrap.services.tailscaled]
+
+[bootstrap.hooks.final]
+  run = ['sudo tailscale up', 'sudo tailscale set --ssh']
