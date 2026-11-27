@@ -102,7 +102,7 @@ check_emulators() {
   assert_symlink_into "$HOME/.config/dolphin-emu" "$SYNC/configs/dolphin-emu"
   local d
   for d in GC Wii StateSaves; do assert_symlink_into "$HOME/.local/share/dolphin-emu/$d" "$SYNC/saves/dolphin-emu"; done
-  # heavy (whole config dirs linked; see conf.d/mise.bee.toml)
+  # heavy (whole config dirs linked; see conf.d/htpc/mise.emu.toml)
   assert_symlink_into "$HOME/.config/Cemu" "$SYNC/configs/cemu"
   assert_symlink_into "$HOME/.local/share/Cemu/mlc01" "$SYNC/saves/wiiu"
   assert_symlink_into "$HOME/.config/rpcs3" "$SYNC/configs/rpcs3"

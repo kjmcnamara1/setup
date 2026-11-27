@@ -13,7 +13,7 @@ SAVES=(nes snes gbc gba megadrive n64 nds psx psp ps2 ps3 ps4 gamecube wii wiiu 
   xbox xbox360 dolphin-emu)
 CONFIGS=(es-de/gamelists es-de/collections es-de/settings retroarch ppsspp pcsx2 dolphin-emu
   cemu rpcs3 ryujinx azahar xemu shadps4 xenia)
-# Every symlink target used by [dotfiles] in conf.d/mise.bee.toml must be listed
+# Every symlink target used by [dotfiles] in conf.d/htpc/mise.emu.toml must be listed
 # here (tests/test-scripts.sh: test_sync_init_covers_every_link_target).
 LINK_TARGETS=(
   saves/psp/PSP/SAVEDATA saves/psp/PSP/PPSSPP_STATE configs/ppsspp/SYSTEM
@@ -43,6 +43,20 @@ if ! flock -n 9; then
   log "another sync is running; skipping"
   exit 0
 fi
+
+# nextcloudcmd fails (exit 1, no message) if the remote --path folder is missing,
+# so create each segment first. MKCOL: 201 = created, 405 = already exists.
+remote=""
+for seg in Games bee; do
+  remote+="/$seg"
+  code="$(curl -s -m10 -o /dev/null -w '%{http_code}' --netrc-optional -X MKCOL \
+    "$BEE_NC_URL/remote.php/webdav$remote" || true)"
+  case "$code" in
+    201) log "created remote folder $remote" ;;
+    405) ;;
+    *) log "could not create remote folder $remote (HTTP $code); check ~/.netrc" ;;
+  esac
+done
 
 if "$BEE_NC_BIN" -n --non-interactive -s --path /Games/bee \
   --exclude-anchored "$EXCLUDE" "$BEE_SYNC_ROOT" "$BEE_NC_URL"; then

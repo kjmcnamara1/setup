@@ -39,14 +39,14 @@ test_sync_init_offline_creates_skeleton() {
   assert_file "$tmp/sync/configs/ryujinx"
 }
 
-# Every symlink source in conf.d/mise.bee.toml that points into the synced folder
+# Every symlink source in conf.d/htpc/mise.emu.toml that points into the synced folder
 # must be created by --init, or [dotfiles] fails on a fresh bee.
 test_sync_init_covers_every_link_target() {
   BEE_SYNC_ROOT="$tmp/sync" BEE_NC_URL="http://127.0.0.1:9" bash "$BIN/bee-nextcloud-sync.sh" --init 2>/dev/null
   local src missing=0
   while IFS= read -r src; do
     if [[ ! -d "$tmp/sync/${src#\~/Nextcloud/Games/bee/}" ]]; then echo "FAIL  skeleton lacks $src"; missing=1; fi
-  done < <(grep -oE 'source *= *"~/Nextcloud/Games/bee/[^"]+"' "$HERE/../../../conf.d/mise.bee.toml" \
+  done < <(grep -oE 'source *= *"~/Nextcloud/Games/bee/[^"]+"' "$HERE/../../../mise.emu.toml" \
     | sed -E 's/.*"(~[^"]+)"/\1/' | grep -v '\.[a-z]*$')
   assert_eq 0 "$missing" "all link targets in skeleton"
 }
@@ -388,7 +388,7 @@ test_backup_skips_when_not_mounted() {
 }
 
 # ---------------------------------------------------------------- config lint (review fixes)
-BEE_TOML="$HERE/../../../conf.d/mise.bee.toml"
+BEE_TOML="$HERE/../../../mise.emu.toml"
 
 # systemd never expands ~ and mise only expands a leading one: use %h.
 test_exec_start_has_no_tilde() {
@@ -454,6 +454,36 @@ test_backup_skips_when_nas_unresponsive() {
     BEE_SKIP_MOUNT_CHECK=1 bash "$BIN/bee-nas-backup.sh"
   assert_eq 0 $? "exit 0"
   assert_no_file "$tmp/bk"
+}
+
+# nextcloudcmd exits 1 (silently) when its --path folder doesn't exist on the server,
+# so the script must create /Games and /Games/bee over WebDAV before syncing.
+test_sync_creates_remote_folder() {
+  cat >"$tmp/dav.py" <<'EOF'
+import http.server, sys
+log = open(sys.argv[2], "a")
+class H(http.server.BaseHTTPRequestHandler):
+    def log_message(self, *a): pass
+    def reply(self, code, body=b""):
+        self.send_response(code); self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
+    def do_GET(self):
+        self.reply(200, b'{"installed":true}') if self.path == "/status.php" else self.reply(404)
+    def do_MKCOL(self):
+        log.write(self.path + "\n"); log.flush(); self.reply(201)
+http.server.HTTPServer(("127.0.0.1", int(sys.argv[1])), H).serve_forever()
+EOF
+  local port
+  port="$(python3 -I -c 'import socket;s=socket.socket();s.bind(("127.0.0.1",0));print(s.getsockname()[1])')"
+  python3 -I "$tmp/dav.py" "$port" "$tmp/mkcol" & srv_pid=$!
+  srv_url="http://127.0.0.1:$port"
+  for _ in $(seq 50); do curl -fsm1 "$srv_url/status.php" >/dev/null 2>&1 && break; sleep 0.1; done
+  make_stub "$tmp/nc"
+  STUB_OUT="$tmp/argv" HOME="$tmp/home" BEE_SYNC_ROOT="$tmp/sync" BEE_NC_URL="$srv_url" BEE_NC_BIN="$tmp/nc" \
+    bash "$BIN/bee-nextcloud-sync.sh"
+  kill "$srv_pid"
+  assert_eq $'/remote.php/webdav/Games\n/remote.php/webdav/Games/bee' "$(cat "$tmp/mkcol" 2>/dev/null)" \
+    "MKCOL each segment of /Games/bee, parent first"
+  assert_file "$tmp/sync/.bee-synced-once" "sync still runs after creating the folder"
 }
 
 # ---------------------------------------------------------------- tests go here

@@ -5,7 +5,7 @@
 set -euo pipefail
 
 # System list: $BEE_LOCAL_SYSTEMS, else the file mise renders from
-# [vars] bee_local_systems in conf.d/mise.bee.toml.
+# [vars] bee_local_systems in conf.d/htpc/mise.emu.toml.
 BEE_LOCAL_SYSTEMS_FILE="${BEE_LOCAL_SYSTEMS_FILE:-$HOME/.config/bee/local-systems}"
 if [[ -z "${BEE_LOCAL_SYSTEMS:-}" ]]; then
   if [[ ! -r "$BEE_LOCAL_SYSTEMS_FILE" ]]; then
